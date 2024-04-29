@@ -26,11 +26,11 @@ if(isset($_GET['id'])){
         </div>
         <div class="form-group row">
             <div class="col-md-4">
-                <label for="" class="control-label">Email</label>
-                <input type="email" class="form-control" name="email"  value="<?php echo isset($email) ? $email :'' ?>" required>
+                <label for="" class="control-label">Email Address</label>
+                <input type="email" class="form-control" name="email"  value="<?php echo isset($email) ? $email :'' ?>" >
             </div>
             <div class="col-md-4">
-                <label for="" class="control-label">Contact #</label>
+                <label for="" class="control-label">Contact Number</label>
                 <input type="text" class="form-control" name="contact"  value="<?php echo isset($contact) ? $contact :'' ?>" required>
             </div>
 						<div class="col-md-4">
@@ -40,8 +40,8 @@ if(isset($_GET['id'])){
         </div>
         <div class="form-group row">
             <div class="col-md-4">
-                <label for="" class="control-label">House</label>
-                <select name="house_id" id="" class="custom-select select2">
+                <label for="" class="control-label">House to Rent</label>
+                <select name="house_id" id="" class="custom-select select2" required>
                     <option value=""></option>
                     <?php 
                     $house = $conn->query("SELECT * FROM houses where id not in (SELECT house_id from tenants where status = 1) ".(isset($house_id)? " or id = $house_id": "" )." ");

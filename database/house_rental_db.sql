@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2024 at 08:03 PM
+-- Generation Time: Apr 29, 2024 at 09:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,17 +53,21 @@ CREATE TABLE `houses` (
   `house_no` varchar(50) NOT NULL,
   `category_id` int(30) NOT NULL,
   `description` text NOT NULL,
-  `price` double NOT NULL
+  `price` double NOT NULL,
+  `occupancy_status` enum('Occupied','Vacant','Maintenance') NOT NULL,
+  `capacity` enum('1-3','4-6','7-9','10+') NOT NULL,
+  `address` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `houses`
 --
 
-INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`) VALUES
-(1, '621', 4, 'Sample', 2500),
-(3, '622', 1, 'Test', 6500),
-(4, '623', 2, 'Test', 5000);
+INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `occupancy_status`, `capacity`, `address`) VALUES
+(1, '621', 4, 'Sample', 2500, 'Occupied', '1-3', ''),
+(5, '622', 2, '', 6000, 'Vacant', '1-3', ''),
+(6, '623', 1, '', 5000, 'Occupied', '1-3', ''),
+(7, '620', 1, '', 7000, 'Vacant', '1-3', '');
 
 -- --------------------------------------------------------
 
@@ -125,7 +129,7 @@ CREATE TABLE `tenants` (
   `contact` varchar(50) NOT NULL,
   `house_id` int(30) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 = active, 0= inactive',
-  `date_in` date NOT NULL,
+  `date_in` date DEFAULT current_timestamp(),
   `contract_start` date DEFAULT NULL,
   `contract_end` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -136,7 +140,17 @@ CREATE TABLE `tenants` (
 
 INSERT INTO `tenants` (`id`, `firstname`, `middlename`, `lastname`, `email`, `contact`, `house_id`, `status`, `date_in`, `contract_start`, `contract_end`) VALUES
 (2, 'Johns', 'C', 'Smiths', 'jsmith@sample.com', '+18456-5455-55', 1, 1, '2020-07-02', NULL, NULL),
-(3, 'AJ', 'C', 'Quiambao', 'aj@gmail.com', '0916', 3, 1, '2024-03-15', '2024-04-30', '2025-04-30');
+(3, 'AJ', 'C', 'Quiambao', 'aj@gmail.com', '0916', 3, 1, '2024-03-15', '2024-04-30', '2025-04-30'),
+(4, 'Da', 'Dog', 'Pan', 'pandog@gmail.com', '9123823211', 4, 0, '0000-00-00', '2024-05-03', '2025-05-03'),
+(5, 'Dog', 'Per', 'Panda', 'pandog@gmail.com', '92138893123', 4, 0, '0000-00-00', '2024-04-24', '2025-04-24'),
+(6, '', '', '', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00'),
+(7, '33', '33', '123', '32131', '213213', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
+(8, '', '', 'Cyka', '', '', 4, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
+(9, '', '', 'Cyka', '', '', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
+(10, 'Loda', 'Loda', 'Panda ', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00'),
+(11, '', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
+(12, 'Kekok', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
+(13, 'Kekok', '', 'Panda', '', '', 5, 1, '2024-04-30', '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -217,7 +231,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -235,7 +249,7 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `tenants`
 --
 ALTER TABLE `tenants`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`

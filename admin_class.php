@@ -250,23 +250,23 @@ class Action
 	}
 	function save_house()
 	{
-		extract($_POST);
-		$data = " house_no = '$house_no' ";
-		$data .= ", description = '$description' ";
-		$data .= ", category_id = '$category_id' ";
-		$data .= ", price = '$price' ";
-		$chk = $this->db->query("SELECT * FROM houses where house_no = '$house_no' ")->num_rows;
-		if ($chk > 0) {
-			return 2;
-			exit;
-		}
-		if (empty($id)) {
-			$save = $this->db->query("INSERT INTO houses set $data");
-		} else {
-			$save = $this->db->query("UPDATE houses set $data where id = $id");
-		}
-		if ($save)
-			return 1;
+			extract($_POST);
+			$data = " house_no = '$house_no' ";
+			$data .= ", description = '$description' ";
+			$data .= ", category_id = '$category_id' ";
+			$data .= ", price = '$price' ";
+			$data .= ", capacity = '$capacity' ";
+			$data .= ", occupancy_status = '$occupancy_status' "; 
+			$data .= ", address = '$address' "; 
+	
+			if (empty($id)) {
+					$save = $this->db->query("INSERT INTO houses set $data");
+			} else {
+					$save = $this->db->query("UPDATE houses set $data where id = $id");
+			}
+	
+			if ($save)
+					return 1;
 	}
 	function delete_house()
 	{
@@ -304,6 +304,9 @@ class Action
 		extract($_POST);
 		$delete = $this->db->query("UPDATE tenants set status = 0 where id = " . $id);
 		if ($delete) {
+			 $tenant = $this->db->query("SELECT * FROM tenants WHERE id = " . $id)->fetch_assoc();
+			$house_id = $tenant['house_id'];
+			$conn->query("UPDATE houses SET occupancy_status = 0 WHERE id = $house_id");
 			return 1;
 		}
 	}

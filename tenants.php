@@ -123,6 +123,29 @@
 	$('.delete_tenant').click(function(){
 		_conf("Are you sure to delete this Tenant?","delete_tenant",[$(this).attr('data-id')])
 	})
+
+	$('#manage-tenant').submit(function(e){
+    e.preventDefault()
+    start_load()
+    $('#msg').html('')
+    $.ajax({
+        url:'ajax.php?action=save_tenant',
+        data: new FormData($(this)[0]),
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST',
+        success:function(resp){
+            if(resp==1){
+                alert_toast("Data successfully saved.",'success')
+                setTimeout(function(){
+                    location.reload()
+                },1000)
+            }
+        }
+    })
+	})
 	
 	function delete_tenant($id){
 		start_load()
