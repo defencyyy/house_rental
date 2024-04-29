@@ -1,6 +1,6 @@
 <?php include('db_connect.php');?>
 
-<div class="container-fluid font-style move">
+<div class="container-fluid">
 	
 	<div class="col-lg-12">
 		<div class="row">
@@ -9,24 +9,20 @@
 			<form action="" id="manage-house">
 				<div class="card">
 					<div class="card-header">
-						    Tenant Form
+						    House Form
 				  	</div>
 					<div class="card-body">
 							<div class="form-group" id="msg"></div>
 							<input type="hidden" name="id">
 							<div class="form-group">
-								<label class="control-label">Full Name</label>
-								<input type="text" class="form-control" name="fullname" required="">
+								<label class="control-label">House No</label>
+								<input type="text" class="form-control" name="house_no" required="">
 							</div>
 							<div class="form-group">
-								<label class="control-label">Phone Number</label>
-								<input type="number" class="form-control text-right" name="phonenumber" step="any" required="">
-							</div>
-							<div class="form-group">
-								<label class="control-label">Apartment Number</label>
+								<label class="control-label">Category</label>
 								<select name="category_id" id="" class="custom-select" required>
 									<?php 
-									$categories = $conn->query("SELECT * FROM categories order by name asc");
+									$categories = $conn->query("SELECT * FROM categories order by id asc");
 									if($categories->num_rows > 0):
 									while($row= $categories->fetch_assoc()) :
 									?>
@@ -38,23 +34,19 @@
 								</select>
 							</div>
 							<div class="form-group">
+								<label for="" class="control-label">Description</label>
+								<textarea name="description" id="" cols="30" rows="4" class="form-control"></textarea>
+							</div>
+							<div class="form-group">
 								<label class="control-label">Price</label>
 								<input type="number" class="form-control text-right" name="price" step="any" required="">
-							</div>
-							<div class="form-group">
-								<label class="control-label">Contract Start</label>
-								<input type="date" class="form-control text-right" name="contractstart" step="any" required="">
-							</div>
-							<div class="form-group">
-								<label class="control-label">Contract End</label>
-								<input type="date" class="form-control text-right" name="contractend" step="any" required="">
 							</div>
 					</div>
 					<div class="card-footer">
 						<div class="row">
-							<div class="col-md-12 btn-style">
-								<button class="savetenant"> Save</button>
-								<button class="cancelbtn" type="reset" > Cancel</button>
+							<div class="col-md-12">
+								<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Save</button>
+								<button class="btn btn-sm btn-default col-sm-3" type="reset" > Cancel</button>
 							</div>
 						</div>
 					</div>
@@ -67,14 +59,14 @@
 			<div class="col-md-8">
 				<div class="card">
 					<div class="card-header">
-						<b>Tenant List</b>
+						<b>House List</b>
 					</div>
 					<div class="card-body">
 						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
 									<th class="text-center">#</th>
-									<th class="text-center">Tenant</th>
+									<th class="text-center">House</th>
 									<th class="text-center">Action</th>
 								</tr>
 							</thead>
@@ -87,16 +79,14 @@
 								<tr>
 									<td class="text-center"><?php echo $i++ ?></td>
 									<td class="">
-										<p>Fullname: <b></b></p>
-										<p><small>Phone #: </b></small></p>
-										<p><small>Apartment #: <b><?php echo $row['house_no'] ?></b></small></p>
+										<p>House #: <b><?php echo $row['house_no'] ?></b></p>
+										<p><small>House Type: <b><?php echo $row['cname'] ?></b></small></p>
+										<p><small>Description: <b><?php echo $row['description'] ?></b></small></p>
 										<p><small>Price: <b><?php echo number_format($row['price'],2) ?></b></small></p>
-										<p><small>Contract Start: </b></small></p>
-										<p><small>Contract End: </b></small></p>
 									</td>
 									<td class="text-center">
-										<button class="edit_tenant" type="button" data-id="<?php echo $row['id'] ?>"  data-house_no="<?php echo $row['house_no'] ?>" data-description="<?php echo $row['description'] ?>" data-category_id="<?php echo $row['category_id'] ?>" data-price="<?php echo $row['price'] ?>" >Edit</button>
-										<button class="delete_tenant" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+										<button class="btn btn-sm btn-primary edit_house" type="button" data-id="<?php echo $row['id'] ?>"  data-house_no="<?php echo $row['house_no'] ?>" data-description="<?php echo $row['description'] ?>" data-category_id="<?php echo $row['category_id'] ?>" data-price="<?php echo $row['price'] ?>" >Edit</button>
+										<button class="btn btn-sm btn-danger delete_house" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
 									</td>
 								</tr>
 								<?php endwhile; ?>

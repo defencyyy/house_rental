@@ -278,23 +278,27 @@ class Action
 	}
 	function save_tenant()
 	{
-		extract($_POST);
-		$data = " firstname = '$firstname' ";
-		$data .= ", lastname = '$lastname' ";
-		$data .= ", middlename = '$middlename' ";
-		$data .= ", email = '$email' ";
-		$data .= ", contact = '$contact' ";
-		$data .= ", house_id = '$house_id' ";
-		$data .= ", date_in = '$date_in' ";
-		if (empty($id)) {
-
-			$save = $this->db->query("INSERT INTO tenants set $data");
-		} else {
-			$save = $this->db->query("UPDATE tenants set $data where id = $id");
-		}
-		if ($save)
-			return 1;
+			extract($_POST);
+			$data = " firstname = '$firstname' ";
+			$data .= ", lastname = '$lastname' ";
+			$data .= ", middlename = '$middlename' ";
+			$data .= ", email = '$email' ";
+			$data .= ", contact = '$contact' ";
+			$data .= ", house_id = '$house_id' ";
+			$data .= ", date_in = '$date_in' ";
+			$data .= ", contract_start = '$contract_start' ";
+			$data .= ", contract_end = '$contract_end' ";    
+			
+			if (empty($id)) {
+					$save = $this->db->query("INSERT INTO tenants set $data");
+			} else {
+					$save = $this->db->query("UPDATE tenants set $data where id = $id");
+			}
+			
+			if ($save)
+					return 1;
 	}
+	
 	function delete_tenant()
 	{
 		extract($_POST);
