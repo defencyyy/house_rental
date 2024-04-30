@@ -75,11 +75,13 @@ if($action == "save_tenant"){
 	if($save)
 		echo $save;
 }
+
 if($action == "delete_tenant"){
 	$save = $crud->delete_tenant();
 	if($save)
 		echo $save;
 }
+
 if($action == "get_tdetails"){
 	$get = $crud->get_tdetails();
 	if($get)
