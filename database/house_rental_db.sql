@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2024 at 06:34 AM
+-- Generation Time: Apr 30, 2024 at 04:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -153,9 +153,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `username`, `password`) VALUES
 (2, 'aeronjquiambao@gmail.com', 'AERON JUSTIN', 'QUIAMBAO', 'Aj', '202cb962ac59075b964b07152d234b70'),
-(3, 'uyyn90786@gmail.com', 'Justa', 'Kori', 'Kim', '827ccb0eea8a706c4c34a16891f84e7b'),
-(4, 'aeronjustin.quiambao@tup.edu.ph', 'Summer', 'Solstice', 'Doggy', '202cb962ac59075b964b07152d234b70'),
-(5, 'piningcalautit@gmail.com', 'Justa', 'Kori', 'are', 'b0baee9d279d34fa1dfd71aadb908c3f');
+(6, 'piningcalautit@gmail.com', 'Justa', 'Kori', 'Kali', '202cb962ac59075b964b07152d234b70'),
+(14, 'aeronjustin.quiambao@tup.edu.ph', 'AERON JUSTIN', 'Kori', 'admins', '211021d2b119d78fe0e0d4d29eeff687'),
+(15, 'aeronjquiambao@gmail.cpms', 'AERON JUSTIN', 'Kori', 'adminss', '211021d2b119d78fe0e0d4d29eeff687');
 
 --
 -- Indexes for dumped tables
@@ -235,7 +235,7 @@ ALTER TABLE `tenants`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
