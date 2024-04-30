@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2024 at 09:23 PM
+-- Generation Time: Apr 30, 2024 at 04:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -64,10 +64,11 @@ CREATE TABLE `houses` (
 --
 
 INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `occupancy_status`, `capacity`, `address`) VALUES
-(1, '621', 4, 'Sample', 2500, 'Occupied', '1-3', ''),
+(1, '625', 4, 'Sample', 2500, 'Occupied', '1-3', ''),
 (5, '622', 2, '', 6000, 'Vacant', '1-3', ''),
 (6, '623', 1, '', 5000, 'Occupied', '1-3', ''),
-(7, '620', 1, '', 7000, 'Vacant', '1-3', '');
+(7, '620', 1, '', 7000, 'Vacant', '1-3', ''),
+(8, '621', 1, '', 2222, 'Vacant', '1-3', '');
 
 -- --------------------------------------------------------
 
@@ -150,7 +151,8 @@ INSERT INTO `tenants` (`id`, `firstname`, `middlename`, `lastname`, `email`, `co
 (10, 'Loda', 'Loda', 'Panda ', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00'),
 (11, '', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
 (12, 'Kekok', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
-(13, 'Kekok', '', 'Panda', '', '', 5, 1, '2024-04-30', '0000-00-00', '0000-00-00');
+(13, 'Kekok', '', 'Panda', '', '', 5, 1, '2024-04-30', '0000-00-00', '0000-00-00'),
+(14, '', '', '', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -231,7 +233,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -249,7 +251,7 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `tenants`
 --
 ALTER TABLE `tenants`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
