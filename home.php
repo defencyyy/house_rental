@@ -21,7 +21,7 @@
             <h4 id = "title4"> Available Apartments </h4>
             <h3 id = "descr"> 3 </h3>
         </div>
-        <div class = "box">
+        <div class = "box"> 
             <img src = "assets\pictures\pending.png" id = "icon">
             <h4 id = "title4"> Pending Payments </h4>
             <h3 id = "descr"> 2 </h3>
