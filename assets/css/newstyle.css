@@ -219,7 +219,8 @@ body {
 /* ===== About Us ===== */
 .wrapper2 {
   align-items: center;
-  background-color: #e1d5c9;
+  /* background-color: #e1d5c9; */
+  background-color: red;
   width: 1519px;
   height: 600px;
   margin-top: 20px;
