@@ -365,7 +365,8 @@
 }
 
 /* ===== Title ===== */
-.title-categories {
+.title-categories,
+.title-houses {
   font-family: "Sansita", sans-serif;
   font-weight: bold;
   font-size: 48px;
@@ -375,9 +376,10 @@
   margin-bottom: 2%;
 }
 
-.categoriespos {
+.categoriespos, .housespos {
   margin-left: -15px;
 }
+
 
 /* ===== Buttons ===== */
 .edit_tenant,
