@@ -79,7 +79,7 @@ body {
   align-items: center;
   justify-content: space-between;
   background-color: #e1d5c9;
-  width: 1519px;
+  width: 100%;
   height: 520px;
   padding: 60px 0 0 0;
   gap: 60px;
@@ -88,8 +88,7 @@ body {
 }
 
 .content {  
-  margin-left: 80px;
-  margin-bottom: 50px;
+ padding-left: 10%;
 }
 
 #button-start {
@@ -106,12 +105,15 @@ body {
 #description,
 #button-start {
   font-family: "Roboto", sans-serif;  
+
 }
 
 #hppic {
   margin-bottom: 62px;
   flex-shrink: 0;
   margin-right: 20px;
+  padding-right: 10%;
+  border-radius: 40%;
 }
 
 /* ===== Preview ===== */
@@ -127,6 +129,7 @@ body {
   font-weight: 400px;
   color: #c59452;
   text-align: center;
+  padding-top: 2%;
 }
 
 /* ===== Quick Stats ===== */
@@ -137,13 +140,17 @@ body {
 #title5 {
   font-family: "Roboto", sans-serif;
   text-align: center;
+  color: black;
+  
 }
 
 .quickstats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  margin-top: 50px;
-  margin-left: 170px;
+  /* margin-top: 50px;
+  margin-left: 170px; */
+  padding-left: 14%;
+  align-items: center;
 }
 
 .box {
@@ -176,23 +183,28 @@ body {
 /* ===== About Us ===== */
 .wrapper {
   align-items: center;
-  /* background-color: #e1d5c9; */
-  background-color: red;
-  width: 1519px;
+  background-color: #e1d5c9;
+  
+  width: 100;
   height: 600px;
   margin-top: 20px;
   position: relative;
 }
 
 #title5 {
-  padding-top: 50px;
+  padding-top: 20px;
+  font-family: "Roboto", sans-serif;
 }
 
 #des {
-  position: absolute;
-  top: 90px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding-left: 10%;
+  padding-right: 10%;
+  font-size: 20px;
+  color: black;
   font-family: "Roboto", sans-serif;
 }
 
@@ -224,10 +236,20 @@ body {
 
 #ovm {
   font-family: "Roboto", sans-serif;
-  margin-left: 100px;
+  display: flex;
+  justify-content: start;
+  text-align: left;
+  align-items: start;
+  padding-left: 6%;
+  padding-right: 10%;
+  font-size: 20px;
+  color: black;
 }
 
 /* ===== Contact ===== */
+#contact{
+  width: 100%;
+}
 .wrapper3 {
   align-items: center;
   background-color: #e1d5c9;
@@ -239,10 +261,12 @@ body {
 
 #title7 {
   font-family: "Roboto", sans-serif;
-  position: absolute;
-  font-size: 40px;
-  top: 50px;
-  left: 100px;
+  display: flex;
+  font-size: 30px;
+  padding-left: 5%;
+  padding-top: 4%;
+  /* top: 50px;
+  left: 100px; */
 }
 
 #contact-des {

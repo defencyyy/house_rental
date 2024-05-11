@@ -77,8 +77,8 @@
           <h2 id = "title5"> We are LivWell </h2>
           <h4 id = "des"> LivWell is a web-based apartment management system. It allows landlords to manage their properties. Additionally, by using LivWell, it improves data organization, enhances efficiency, and makes it convenient for landlords and renters. </h4>
         </div>
-        <img src = "assets\pictures\four.jpg" id = "fourpic">
-        <img src = "assets\pictures\tup.png" id = "tuppic">
+        <!-- <img src = "assets\pictures\four.jpg" id = "fourpic"> -->
+        <!-- <img src = "assets\pictures\tup.png" id = "tuppic"> -->
       </div>
   </section>
 
@@ -106,7 +106,7 @@
 
   <!-- ===== Footer ===== -->
   <footer>
-    <p>Copyright &#169; 2024 LivWell: Apartment Management System. All Rights Reserved..</p>
+    <p>Copyright &#169; 2024 LivWell: Apartment Management System. All Rights Reserved.</p>
   </footer>
 </body>
 </html>
