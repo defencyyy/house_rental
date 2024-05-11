@@ -71,7 +71,7 @@
 
   <!-- ===== About ===== -->
   <section id = "about">
-    <h1 id = "title2"> About Us </h1>
+    <h1 id = "title2"> About Us</h1>
       <div class = "wrapper2">
         <div class = "content1">
           <h2 id = "title5"> We are LivWell </h2>
@@ -106,7 +106,7 @@
 
   <!-- ===== Footer ===== -->
   <footer>
-    <p>Copyright &#169; 2024 LivWell: Apartment Management System. All Rights Reserved.</p>
+    <p>Copyright &#169; 2024 LivWell: Apartment Management System. All Rights Reserved..</p>
   </footer>
 </body>
 </html>
