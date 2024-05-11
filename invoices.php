@@ -1,6 +1,8 @@
 <?php include('db_connect.php');?>
 
-<div class="container-fluid">
+<h2 class = "titlepage"> Payments </h2>
+
+<div class="container-fluid paymentspos">
 	
 	<div class="col-lg-12">
 		<div class="row mb-4 mt-4">
@@ -16,7 +18,7 @@
 				<div class="card">
 					<div class="card-header">
 						<b>List of Payments</b>
-						<span class="float:right"><a class="btn btn-primary btn-block btn-sm col-sm-2 float-right" href="javascript:void(0)" id="new_invoice">
+						<span class="float:right"><a class="btn-sm col-sm-2 float-right newtenantbtn" href="javascript:void(0)" id="new_invoice">
 					<i class="fa fa-plus"></i> New Entry
 				</a></span>
 					</div>
