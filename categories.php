@@ -1,6 +1,6 @@
 <?php include('db_connect.php');?>
-
-<div class="container-fluid">
+<h2 class = "title-categories">Categories</h2>
+<div class="container-fluid categoriespos">
 	
 	<div class="col-lg-12">
 		<div class="row">
@@ -22,7 +22,7 @@
 					<div class="card-footer">
 						<div class="row">
 							<div class="col-md-12">
-								<button class="btn btn-sm btn-primary col-sm-3 offset-md-3"> Save</button>
+								<button class="col-sm-3 offset-md-3 savebtn"> Save</button>
 								<button class="btn btn-sm btn-default col-sm-3" type="button" onclick="$('#manage-category').get(0).reset()"> Cancel</button>
 							</div>
 						</div>
