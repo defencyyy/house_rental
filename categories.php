@@ -1,6 +1,6 @@
 <?php include('db_connect.php');?>
-<h2 class = "title-categories">Categories</h2>
-<div class="container-fluid categoriespos">
+<h2 class = "titlepage">Categories</h2>
+<div class="container-fluid tablepos">
 	
 	<div class="col-lg-12">
 		<div class="row">

@@ -365,8 +365,7 @@
 }
 
 /* ===== Title ===== */
-.title-categories,
-.title-houses {
+.titlepage {
   font-family: "Sansita", sans-serif;
   font-weight: bold;
   font-size: 48px;
@@ -376,14 +375,16 @@
   margin-bottom: 2%;
 }
 
-.categoriespos, .housespos {
+.tablepos,
+.tenantspos, .paymentspos {
   margin-left: -15px;
 }
 
+.tenantspos, .paymentspos {
+  margin-top: -20px;
+}
 
 /* ===== Buttons ===== */
-.edit_tenant,
-.savetenant,
 .savebtn {
   border-radius: 6px;
   background-color: #c59452;
@@ -393,13 +394,19 @@
   width: 80px;
 }
 
-.delete_tenant,
-.cancelbtn {
-  border-radius: 6px;
-  background-color: black;
+.newtenantbtn {
+  background-color: #c59452;
   color: white;
-  height: 30px;
-  width: 80px;
+  border: 1px solid #c59452;
+  text-align: center;
+}
+
+.newtenantbtn:hover {
+  color: white;
+}
+
+.btnpos {
+  margin-top: 2px;
 }
 
 .btn-style {

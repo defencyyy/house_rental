@@ -1,8 +1,8 @@
 <?php include('db_connect.php');?>
 
-<h2 class = "title-houses">Houses</h2>
+<h2 class = "titlepage">Houses</h2>
 
-<div class="container-fluid housespos">
+<div class="container-fluid tablepos">
 	
 	<div class="col-lg-12">
 		<div class="row">
