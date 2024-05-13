@@ -23,9 +23,10 @@ if(!isset($_SESSION['login_id'])) {
   <link rel="stylesheet" href="assets\css\styledash.css">
 </head>
 <?php include('db_connect.php');?>
-<body>
+<body id = "bods">
 	<?php include 'topbar.php' ?>
 	<?php include 'navbar.php' ?>
+    <section id = "accounthead">
     <h2 class = "title-account">Account</h2>
     <div class = "account-banner">
         <div class = "banner-content">
@@ -38,32 +39,34 @@ if(!isset($_SESSION['login_id'])) {
             </div>
         </div>
     </div>
+    </section>
     <div class = "information">
         <div class = "box-information">
+            <p class = "title-box"> Personal Information</p>
             <div class = "boxcontent">
-                <p class = "title-box"> Personal Information </p>
-                <p class = "box-title"> Legal Name </p>
-                <div class = "line"></div>
-                <p class = "box-description"><?php echo $_SESSION['login_name']?></div>
-                <p class = "box-title"> Date of Birth </p>
-                <div class = "line"></div>
-                <p class = "box-description">April 1, 2002</div>
+                
+                <p class = "box-title1"> Legal Name </p>
+                <hr class = "line">
+                <p class = "box-description1"><?php echo $_SESSION['login_name']?></p>
+                <p class = "box-title1"> Date of Birth </p>
+                <hr class = "line">
+                <p class = "box-description1">April 1, 2002</p>
                 <p class = "box-title1"> Phone Number </p>
-                <div class = "line1"></div>
-                <p class = "box-description1">0927025355</div>
+                <hr class = "line">
+                <p class = "box-description1">0927025355</p>
                 <p class = "box-title1"> Email </p>
-                <div class = "line1"></div>
-                <p class = "box-description1">jewel@gmail.com</div>
+                <hr class = "line">
+                <p class = "box-description1">jewel@gmail.com</p>
                 <p class = "box-title1"> Address </p>
-                <div class = "line1"></div>
-                <p class = "box-description1">Ayala Blvd., Ermita Manila</div>
+                <hr class = "line">
+                <p class = "box-description1">Ayala Blvd., Ermita Manila</p>
             </div>
         </div>
         <div class = "box-information1">
-            <div class = "boxcontent">
+            <div class = "boxcontent1">
                 <p class = "title-box">Security</p>
-                <p class = "box-title">Password</p>
-                <div class = "line"></div>
+                <!-- <p class = "box-title">Password</p> -->
+                
                 <p class = "box-description">Change your password</p>
                 <form id = "input-form-password">
                     <div>
@@ -82,5 +85,12 @@ if(!isset($_SESSION['login_id'])) {
                 </form>
             </div>
         </div>
+        <!-- <div class = "box-information2">
+            <div class = "boxcontent">
+                <p>Update Profile</p>
+                <button type = "submit">Choose File <input type="text" placeholder = "No file chosen"></button>
+            </div>
+        </div> -->
+
     </div>
 </body>

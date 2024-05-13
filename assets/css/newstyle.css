@@ -74,7 +74,7 @@ body {
 }
 
 /* ===== Home ===== */
-.wrapper {
+.wrapper {  
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -483,3 +483,4 @@ footer {
   border: 2px solid #c59452;
   padding: 10px;
 }
+

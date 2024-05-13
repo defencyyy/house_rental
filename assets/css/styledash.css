@@ -174,6 +174,16 @@
 }
 
 /* ===== Account ===== */
+#bods
+{
+  overflow-x: hidden;
+}
+
+.updatepic{
+  display: flex;
+  padding-left: 10%;
+}
+
 .title-account {
   font-family: "Sansita", sans-serif;
   font-weight: bold;
@@ -191,7 +201,7 @@
   height: 220px;
   padding: 60px;
   box-sizing: border-box;
-  margin-left: 16.3%;
+  margin-left: 13.2%;
   margin-right: auto;
 }
 
@@ -251,33 +261,64 @@
   font-size: 16px;
 }
 
+.information
+{
+display: flex;
+flex-direction: column;
+padding-left: 13.2%;
+justify-content: center;
+align-content: space-around;
+}
+
 .box-information {
-  width: 560px;
-  height: 580px;
-  position: relative;
-  top: 80px;
-  left: 290px;
+  /* width: 560px;
+  height: 580px; */
+  /* display: flex; */
+  /* top: 80px;
+  left: 290px; */
+ 
+  padding-bottom: 50px;
+ 
 }
 
 .box-information1 {
-  width: 560px;
-  height: 580px;
+  /* width: 560px;
+  height: 580px; */
   background-color: #e1d5c9;
-  position: relative;
-  top: -760px;
-  left: 900px;
+  /* display: flex; */
+    /* top: -760px;
+    left: 900px; */
+
 }
 
+.box-information2{
+  padding-bottom: 20%;
+}
+.boxcontent
+{
+  /* padding-left: 30%; */
+}
+.boxcontent1{
+  display: flex;
+  flex-direction: column;
+align-items: center;
+justify-content: center;
+padding-top: 5%;
+padding-bottom: 5%;
+}
+
+
+
 .title-box,
-.box-title,
-.box-title1,
+/* .box-title, */
+/* .box-title1, */
 .box-description,
-.title-inputPass,
-.box-description1 {
+.title-inputPass
+/* .box-description1 */ {
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   color: black;
-  position: relative;
+
 }
 
 .title-box {
@@ -286,37 +327,43 @@
   top: 50px;
 }
 
-.box-title {
+.box-title1 {
+  display: flex;
+  
+  align-items: center;
+  justify-content: center;
+}
+
+/* .box-title {
   font-size: 20px;
   top: 80px;
   left: 30px;
-}
+} */
 
 .line {
   width: 500px;
   border: 1px solid #0000001a;
-  position: relative;
-  top: 65px;
-  left: 30px;
 }
 
 .box-description {
   font-size: 16px;
   font-weight: 400;
-  top: 70px;
-  left: 30px;
-}
 
+}
+.box-description1 {
+  font-size: 16px;
+  font-weight: 400;
+  padding-left: 35%;
+  
+  
+
+}
 #input-form-password {
-  position: relative;
-  left: 30px;
-  top: 90px;
+
 }
 
 .title-inputPass {
-  margin-bottom: 2px;
-  margin-left: 5px;
-  font-size: 14px;
+
 }
 
 .custom-inputPass {
@@ -330,39 +377,44 @@
 }
 
 #updatepass {
-  width: 160px;
-  height: 48px;
+  /* width: 160px;
+  height: 48px; */
   font-size: 16px;
   font-weight: 500;
   background-color: #c59452;
   color: white;
   border-radius: 10px;
   border: 2px solid #c59452;
-  padding: 10px;
+  
+  /* padding: 10px;
   margin-left: 180px;
-  margin-top: 10px;
+  margin-top: 10px; */
+ 
+
+
+
 }
 
-.box-description1 {
+/* .box-description1 {
   font-size: 16px;
   font-weight: 400;
   top: -202px;
   left: 320px;
-}
+} */
 
 .box-title1 {
-  font-size: 20px;
-  top: -190px;
-  left: 320px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  color: black;
 }
 
-.line1 {
+/* .line1 {
   width: 500px;
   border: 1px solid #0000001a;
   position: relative;
   top: -205px;
   left: 320px;
-}
+} */
 
 /* ===== Title ===== */
 .titlepage {
