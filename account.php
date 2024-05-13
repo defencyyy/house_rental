@@ -81,7 +81,7 @@ if(!isset($_SESSION['login_id'])) {
                         <p class = "title-inputPass">Current Password</p>
                         <input type="password" name="confirmpassword" placeholder="Confirm your password" class="custom-inputPass">
                     </div>
-                    <button type="submit" id="updatepass">Update Password</button>
+                    <button type="submit" id="updatepass" >Update Password</button>
                 </form>
             </div>
         </div>
