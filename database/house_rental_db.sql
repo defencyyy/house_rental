@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2024 at 03:00 PM
+-- Generation Time: May 18, 2024 at 03:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -152,7 +152,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `username`, `password`) VALUES
-(6, 'piningcalautit@gmail.com', 'Justa', 'Kori', 'Kali', '202cb962ac59075b964b07152d234b70'),
+(6, 'piningcalautit@gmail.com', 'Justa', 'Kori', 'Kali', '211021d2b119d78fe0e0d4d29eeff687'),
 (14, 'aeronjustin.quiambao@tup.edu.ph', 'AERON JUSTIN', 'Kori', 'admins', '211021d2b119d78fe0e0d4d29eeff687'),
 (15, 'aeronjquiambao@gmail.cpms', 'AERON JUSTIN', 'Kori', 'adminss', '211021d2b119d78fe0e0d4d29eeff687'),
 (17, 'aeronjquiambao@gmail.com', 'aj', 'aj', 'aj', '95fe6e57f441edcdde73fa3c78651b41');
@@ -235,7 +235,7 @@ ALTER TABLE `tenants`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

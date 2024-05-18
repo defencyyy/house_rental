@@ -36,6 +36,8 @@ if (isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
             $update_query = "UPDATE users SET password = '$hashed_password' WHERE email = '$email'";
             if (mysqli_query($conn, $update_query)) {
                 echo "<script>alert('Password updated successfully.');</script>";
+                echo "<script>setTimeout(function() { window.location.href = 'login.php'; });</script>";
+            
             } else {
                 echo "<script>alert('Failed to update password. Please try again.');</script>";
             }
