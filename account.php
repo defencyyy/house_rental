@@ -67,7 +67,7 @@ if(!isset($_SESSION['login_id'])) {
                 <p class = "title-box">Security</p>
                 <!-- <p class = "box-title">Password</p> -->
                 
-                <p class = "box-description">Change your password</p>
+                <p class = "box-description">Change your password</p>h
                 <form id = "input-form-password">
                     <div>
                         <p class = "title-inputPass">Current Password</p>
