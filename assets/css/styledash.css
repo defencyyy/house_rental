@@ -307,6 +307,16 @@ padding-top: 5%;
 padding-bottom: 5%;
 }
 
+.holder {
+  padding: 10px;
+  margin-bottom: 8px;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+  outline: none;
+  width: 500px;
+}
+
 
 
 .title-box,
@@ -371,10 +381,11 @@ padding-bottom: 5%;
   margin-bottom: 8px;
   border: none;
   border-radius: 10px;
-  background-color: white;
-  outline: none;
+  background-color: rgb(0, 0, 0);
+  
   width: 500px;
 }
+
 
 #updatepass {
   /* width: 160px;
