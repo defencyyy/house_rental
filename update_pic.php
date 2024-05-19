@@ -33,10 +33,10 @@ if(!isset($_SESSION['login_id'])) {
             <div class = "profilepic"></div>
             <div class = "account-name"><?php echo $_SESSION['login_name']?></div>
             <div class = "account-status">Landlord</div>
-            <div class="button-container">
+            <!-- <div class="button-container">
                 <button type="button" id="changeprofile">Change Profile Picture</button>
                 <button type="submit" id="updateprofile">Update Profile</button>
-            </div>
+            </div> -->
         </div>
     </div>
     </section>
@@ -54,13 +54,16 @@ if(!isset($_SESSION['login_id'])) {
                 <input type="text" name="login_name" class="custom-inputPass" placeholder=<?php echo $_SESSION['login_name']?> class = holder>
                 <p class = "box-title1">Current Address</p>
                 <input type="text" name="login_name" class="custom-inputPass" placeholder=<?php echo $_SESSION['login_name']?>>
+                <br><br><br>
                 <p class = "box-title1">Profile Picture</p>
                 
-                <br><br><div class = "profilepic"></div><br><br><br>
+                <!-- <br><br><div class = "profilepic"></div><br><br><br> -->
+
+                <span class = circle></span> <br> <br>
                 
                 <button type="file" name="login_name" ><input type="file" placeholder="Name"></button>
                 
-                <br><br><br><button>Update Information</button>
+                <br><button id="updatepass">Update Information</button>
                 <!-- <p class = "box-description1"><?php echo $_SESSION['login_name']?></p> -->
             </div>
         </div>

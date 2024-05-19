@@ -215,6 +215,24 @@
   top: 50px;
 }
 
+::placeholder
+{
+  color: white;
+}
+
+.circle
+{
+  height: 200px;
+  width: 200px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .account-name,
 .account-status {
   font-family: "Roboto", sans-serif;
@@ -381,7 +399,7 @@ padding-bottom: 5%;
   margin-bottom: 8px;
   border: none;
   border-radius: 10px;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(110, 110, 110);
   
   width: 500px;
 }
