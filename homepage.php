@@ -63,34 +63,7 @@
       </div>
     </div>
   </section>
-
-  <!-- ===== Add Apartment ===== -->
-  <section id = "add">
-    <div class = "wrapper1">
-      <div class = "content1">
-        <h2 id = "title5"> Add New Apartment </h2>
-        <div class = "input-form">
-          <div>
-            <h4 class = "title-input">Category</h4>
-            <input type="text" name="Category" placeholder="Create or select Category" class="custom-input">
-          </div>
-          <div>
-            <h4 class = "title-input">Apartment Name</h4>
-            <input type="text" name="ApartmentName" placeholder="Enter Apartment Name" class="custom-input">
-          </div>
-          <div>
-            <h4 class = "title-input">Rent Rate</h4>
-            <input type="text" name="RentRate" placeholder="Rent Rate" class="custom-input">
-          </div>
-          <div>
-            <h4 class = "title-input">Contract Length</h4>
-            <input type="text" name="ContractLength" placeholder="Contract Length" class="custom-input">
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  
   <!-- ===== Data ===== -->
   <section id = "data">
     <h2 id = "title3"> Data Visualized </h2>
