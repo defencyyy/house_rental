@@ -1,6 +1,8 @@
 <?php include('db_connect.php');?>
 
-<div class="container-fluid">
+<h2 class = "titlepage"> Tenants </h2>
+
+<div class="container-fluid tenantspos">
 	
 	<div class="col-lg-12">
 		<div class="row mb-4 mt-4">
@@ -16,7 +18,7 @@
 				<div class="card">
 					<div class="card-header">
 						<b>List of Tenant</b>
-						<span class="float:right"><a class="btn btn-primary btn-block btn-sm col-sm-2 float-right" href="javascript:void(0)" id="new_tenant">
+						<span class="float:right"><a class="btn-sm col-sm-2 float-right newtenantbtn" href="javascript:void(0)" id="new_tenant">
 					<i class="fa fa-plus"></i> New Tenant
 				</a></span>
 					</div>
@@ -73,9 +75,9 @@
 													<p><b><?php echo date("M d, Y",strtotime($row['contract_end'])) ?></b></p> 
 											</td>
 											<td class="text-center">
-													<button class="btn btn-sm btn-outline-primary view_payment" type="button" data-id="<?php echo $row['id'] ?>">View</button>
-													<button class="btn btn-sm btn-outline-primary edit_tenant" type="button" data-id="<?php echo $row['id'] ?>">Edit</button>
-													<button class="btn btn-sm btn-outline-danger delete_tenant" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+													<button class="btn btn-sm btn-outline-primary" type="button" data-id="<?php echo $row['id'] ?>">View</button>
+													<button class="btn btn-sm btn-outline-primary" type="button" data-id="<?php echo $row['id'] ?>">Edit</button>
+													<button class="btn btn-sm btn-outline-danger btnpos" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
 											</td>
 									</tr>
 									<?php endwhile; ?>
