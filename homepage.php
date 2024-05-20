@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -11,62 +12,62 @@
 <body>
 
   <!-- ===== Navigation ===== -->
-  <section id = "header">
-    <div class = "nav-container">
-      <nav id = "desktop-nav">
-         <img src = "assets\pictures\livwellLogo.png" id ="logoimg"/>
-         <div class = "logoText">LivWell</div>
-         <ul id = "nav-links">
-          <li><a href = "#home">Home</a></li>
-          <li><a href = "#about">About Us</a></li>
+  <section id="header">
+    <div class="nav-container">
+      <nav id="desktop-nav">
+        <img src="assets\pictures\livwellLogo.png" id="logoimg" />
+        <div class="logoText">LivWell</div>
+        <ul id="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
           <li><a href="login.php">Log in</a></li>
-         </ul>
+        </ul>
       </nav>
     </div>
   </section>
 
   <!-- ===== Home ===== -->
-  <section id = "home">
-    <div class = "wrapper">
-      <div class = "content">
-        <h1 id = "title"> Your Apartment Management System </h1>
-        <p id = "description"> See your apartments in a better, organized, and modern perspective</p>
-        <a onclick = "window.location.href = 'signup.php'" id = "button-start"> Get Started</a>
+  <section id="home">
+    <div class="wrapper">
+      <div class="content">
+        <h1 id="title"> Your Apartment Management System </h1>
+        <p id="description"> See your apartments in a better, organized, and modern perspective</p>
+        <a onclick="window.location.href = 'signup.php'" id="button-start"> Get Started</a>
       </div>
-      <img src = "assets\pictures\homepagepic.png" id = hppic>
+      <img src="assets\pictures\homepagepic.png" id=hppic>
     </div>
   </section>
-  
+
   <!-- ===== Preview ===== -->
-  <section id = "preview">
-    <h1 id = "title2"> Preview What's Inside </h1>
+  <section id="preview">
+    <h1 id="title2"> Preview What's Inside </h1>
   </section>
 
   <!-- ===== Quick Stats ===== -->
-  <section id = "stats">
-    <h2 id = "title3"> Quick Stats </h2>
-    <div class = "quickstats">
-      <div class = "box">
-          <img src = "assets\pictures\total.png" id = icon>
-          <h4 id = "title4"> Total Apartments </h4>
-          <h3 id = "descr"> 9 </h4>
+  <section id="stats">
+    <h2 id="title3"> Quick Stats </h2>
+    <div class="quickstats">
+      <div class="box">
+        <img src="assets\pictures\total.png" id=icon>
+        <h4 id="title4"> Total Apartments </h4>
+        <h3 id="descr"> 9 </h4>
       </div>
-      <div class = "box">
-          <img src = "assets\pictures\available.png" id = icon>
-          <h4 id = "title4"> Available Apartments </h4>
-          <h3 id = "descr"> 3 </h4>
+      <div class="box">
+        <img src="assets\pictures\available.png" id=icon>
+        <h4 id="title4"> Available Apartments </h4>
+        <h3 id="descr"> 3 </h4>
       </div>
-      <div class = "box">
-          <img src = "assets\pictures\pending.png" id = icon>
-          <h4 id = "title4"> Pending Payments </h4>
-          <h3 id = "descr"> 2 </h4>
+      <div class="box">
+        <img src="assets\pictures\pending.png" id=icon>
+        <h4 id="title4"> Pending Payments </h4>
+        <h3 id="descr"> 2 </h4>
       </div>
     </div>
   </section>
-  
+
   <!-- ===== Data ===== -->
-  <section id = "data">
-    <h2 id = "title3"> Data Visualized </h2>
+  <section id="data">
+    <h2 id="title3"> Data Visualized </h2>
   </section>
 
   <!-- ===== About ===== -->
@@ -83,24 +84,24 @@
   </section>
 
   <!-- ===== Objective ===== -->
-  <section id = "objective">
-    <h2 id = "title6"> Our Objective </h2>
-    <h4 id = "ovm" >To provide an intuitive, web-based apartment management system that streamlines property management tasks, enhances data organization, and fosters seamless communication between landlords and renters.</h4>
-    <h2 id = "title6"> Our Vision </h2>
-    <h4 id = "ovm" >To become the leading platform for apartment management, recognized for our commitment to simplifying property management processes, optimizing data utilization, and fostering positive relationships between landlords and renters. We envision a future where LivWell transforms the rental industry, making property management effortless and renting a joyous experience for all parties involved.</h4>
-    <h2 id = "title6"> Our Mission</h2>
-    <h4 id = "ovm" >Our mission is to empower landlords with the tools they need to efficiently manage their properties while offering renters a convenient and transparent renting experience. Through continuous innovation and customer-centric approaches, we aim to revolutionize the way rental properties are managed and experienced.</h4>
+  <section id="objective">
+    <h2 id="title6"> Our Objective </h2>
+    <h4 id="ovm">To provide an intuitive, web-based apartment management system that streamlines property management tasks, enhances data organization, and fosters seamless communication between landlords and renters.</h4>
+    <h2 id="title6"> Our Vision </h2>
+    <h4 id="ovm">To become the leading platform for apartment management, recognized for our commitment to simplifying property management processes, optimizing data utilization, and fostering positive relationships between landlords and renters. We envision a future where LivWell transforms the rental industry, making property management effortless and renting a joyous experience for all parties involved.</h4>
+    <h2 id="title6"> Our Mission</h2>
+    <h4 id="ovm">Our mission is to empower landlords with the tools they need to efficiently manage their properties while offering renters a convenient and transparent renting experience. Through continuous innovation and customer-centric approaches, we aim to revolutionize the way rental properties are managed and experienced.</h4>
   </section>
 
   <!-- ===== Contact Us ===== -->
-  <section id = "contact">
-    <div class = "wrapper3">
-      <h2 id = "title7">Contact Us</h2>
-      <h4 id = "contact-des"> Let us know what you think through the channels below: </h4>
-      <img src = "assets\pictures\fb.png" id = "icon1">
-      <img src = "assets\pictures\google.png" id = "icon2">
-      <p id = "fb"> LivWell </p>
-      <p id = "google"> livwell@gmail.com </p>
+  <section id="contact">
+    <div class="wrapper3">
+      <h2 id="title7">Contact Us</h2>
+      <h4 id="contact-des"> Let us know what you think through the channels below: </h4>
+      <img src="assets\pictures\fb.png" id="icon1">
+      <img src="assets\pictures\google.png" id="icon2">
+      <p id="fb"> LivWell </p>
+      <p id="google"> livwell@gmail.com </p>
     </div>
   </section>
 
@@ -109,4 +110,5 @@
     <p>Copyright &#169; 2024 LivWell: Apartment Management System. All Rights Reserved.</p>
   </footer>
 </body>
+
 </html>

@@ -45,7 +45,7 @@ if (isset($_GET['email'])) {
         $mail->Body    = 'Dear user, 
             You have requested to reset your password. 
             Please follow the link below to reset your password: 
-            https://www.youtube.com/watch?v=dQw4w9WgXcQ'; // Email message
+            http://localhost/house_rental/restartpassprocess.php'; // Email message
 
         // Send the email
         $mail->send();

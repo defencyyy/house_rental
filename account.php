@@ -1,26 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-	
-<?php session_start();
-if(!isset($_SESSION['login_id'])) {
+<?php
+session_start();
+include('db_connect.php');
+
+if (!isset($_SESSION['login_id'])) {
     header('location: homepage.php');
     exit();
 }
+
+if (isset($_POST['currentpassword']) && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
+    $current_password = $_POST['currentpassword'];
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
+    $username = $_SESSION['login_name'];
+
+    // Retrieve the hashed password from the database
+    $query = "SELECT password FROM users WHERE username = '$username'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $stored_password_hash = $row['password'];
+
+        // Verify if the current password matches the one stored in the database
+        if (md5($current_password) === $stored_password_hash) {
+            // Check if new password and confirm password match
+            if ($new_password !== $confirm_password) {
+                echo "<script>alert('Passwords do not match. Please try again.');</script>";
+            } else {
+                // Add additional password verifications here if needed
+                if (strlen($new_password) < 8) {
+                    echo "<script>alert('Password must be at least 8 characters long.');</script>";
+                } elseif (!preg_match("/[A-Z]/", $new_password)) {
+                    echo "<script>alert('Password must contain at least one uppercase letter.');</script>";
+                } elseif (!preg_match("/[a-z]/", $new_password)) {
+                    echo "<script>alert('Password must contain at least one lowercase letter.');</script>";
+                } elseif (!preg_match("/[0-9]/", $new_password)) {
+                    echo "<script>alert('Password must contain at least one number.');</script>";
+                } elseif (!preg_match("/[!@#$%^&*()-_=+{};:,<.>]/", $new_password)) {
+                    echo "<script>alert('Password must contain at least one special character.');</script>";
+                } else {
+                    // Hash the new password
+                    $hashed_password = md5($new_password);
+
+                    // Update the hashed password in the database
+                    $update_query = "UPDATE users SET password = '$hashed_password' WHERE username = '$username'";
+                    if (mysqli_query($conn, $update_query)) {
+                        echo "<script>alert('Password updated successfully.');</script>";
+                    } else {
+                        echo "<script>alert('Failed to update password. Please try again.');</script>";
+                    }
+                }
+            }
+        } else {
+            echo "<script>alert('Current password is incorrect.');</script>";
+        }
+    } else {
+        echo "<script>alert('Error fetching user data.');</script>";
+    }
+}
 ?>
+
+
+
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></title>
- 	<link rel="icon" type="image/png" href="assets\pictures\livwellLogo.png">
+    <title><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></title>
+    <link rel="icon" type="image/png" href="assets\pictures\livwellLogo.png">
 
 
-  <?php
-    if(!isset($_SESSION['login_id']))
-      header('location:login.php');
-    include('./header.php'); 
-  ?>
-  <link rel="stylesheet" href="assets\css\styledash.css">
+    <?php
+    if (!isset($_SESSION['login_id']))
+        header('location:login.php');
+    include('./header.php');
+    ?>
+    <link rel="stylesheet" href="assets\css\styledash.css">
 </head>
 <?php include('db_connect.php');?>
 <body id = "bods">

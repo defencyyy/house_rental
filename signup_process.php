@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate email format using regular expression
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email)) {
         // Invalid email format
-        echo "Invalid email format. Please enter a valid email address.";
+        echo "<script>alert('Invalid email format. Please enter a valid email address.');</script>";
     } else {
         // Check if email exists
         $check_email_query = "SELECT * FROM users WHERE email = '$email'";
@@ -25,25 +25,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if email or username already exists
         if ($result_email->num_rows > 0) {
             // Email already exists
-            echo "Email already exists. Please use a different email.";
+            echo "<script>alert('Email already exists. Please use a different email.');</script>";
         } elseif ($result_username->num_rows > 0) {
             // Username already exists
-            echo "Username already exists. Please choose a different username.";
+            echo "<script>alert('Username already exists. Please choose a different username.');</script>";
         } elseif (strlen($password) < 8) {
             // Password length is less than 8 characters
-            echo "Password must be at least 8 characters long.";
+            echo "<script>alert('Password must be at least 8 characters long.');</script>";
         } elseif (!preg_match("/[A-Z]/", $password)) {
-            // Password does not contain an uppercase letter
-            echo "Password must contain at least one uppercase letter.";
+            // Password does not contain an uppercase letter\
+            echo "<script>alert('Password must contain at least one uppercase letter.');</script>";
         } elseif (!preg_match("/[a-z]/", $password)) {
             // Password does not contain a lowercase letter
-            echo "Password must contain at least one lowercase letter.";
+            echo "<script>alert('Password must contain at least one lowercase letter.');</script>";
         } elseif (!preg_match("/[0-9]/", $password)) {
             // Password does not contain a number
-            echo "Password must contain at least one number.";
+            echo "<script>alert('Password must contain at least one number.');</script>";
         } elseif (!preg_match("/[!@#$%^&*()-_=+{};:,<.>]/", $password)) {
             // Password does not contain a special character
-            echo "Password must contain at least one special character.";
+            echo "<script>alert('Password must contain at least one special character.');</script>";
         } else {
             // No existing email or username, and password meets strength requirements, proceed with registration
 
@@ -61,9 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Execute the prepared statement
             if ($stmt->execute()) {
                 // Registration successful
-                echo "Registration successful. You can now login.";
-                // Redirect user to login page or any other page as needed
-                // header("Location: login.php");
+                echo "<script>alert('Registration successful. You can now login.');</script>";
+                // Wait for 3 seconds before redirecting
+                echo "<script>setTimeout(function() { window.location.href = 'login.php'; });</script>";
             } else {
                 // Handle database error
                 echo "Error: " . $conn->error;
