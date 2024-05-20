@@ -33,10 +33,12 @@ if(!isset($_SESSION['login_id'])) {
             <div class = "profilepic"></div>
             <div class = "account-name"><?php echo $_SESSION['login_name']?></div>
             <div class = "account-status">Landlord</div>
-            <!-- <div class="button-container">
-                <button type="button" id="changeprofile">Change Profile Picture</button>
-                <button type="submit" id="updateprofile">Update Profile</button>
-            </div> -->
+            <div class="button-container">
+                
+                <button type="button" id="changeprofile">Update Information</button>
+                <button type="submit" id="updateprofile">Change Password</button>
+                
+            </div>
         </div>
     </div>
     </section>
@@ -67,40 +69,6 @@ if(!isset($_SESSION['login_id'])) {
                 <!-- <p class = "box-description1"><?php echo $_SESSION['login_name']?></p> -->
             </div>
         </div>
-
-
-
-
-
-        <div class = "box-information1">
-            <div class = "boxcontent1">
-                <p class = "title-box">Security</p>
-                <!-- <p class = "box-title">Password</p> -->
-                
-                <p class = "box-description">Change your password</p>
-                <form id = "input-form-password">
-                    <div>
-                        <p class = "title-inputPass">Current Password</p>
-                        <input type="password" name="currentpassword" placeholder="Enter your current password" class="custom-inputPass">
-                    </div>
-                    <div>
-                        <p class = "title-inputPass">New Password</p>
-                        <input type="password" name="newpassword" placeholder="Enter your new password" class="custom-inputPass">
-                    </div>
-                    <div>
-                        <p class = "title-inputPass">Current Password</p>
-                        <input type="password" name="confirmpassword" placeholder="Confirm your password" class="custom-inputPass">
-                    </div>
-                    <button type="submit" id="updatepass" >Update Password</button>
-                </form>
-            </div>
-        </div>
-        <!-- <div class = "box-information2">
-            <div class = "boxcontent">
-                <p>Update Profile</p>
-                <button type = "submit">Choose File <input type="text" placeholder = "No file chosen"></button>
-            </div>
-        </div> -->
-
+        
     </div>
 </body>
