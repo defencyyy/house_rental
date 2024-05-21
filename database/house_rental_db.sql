@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2024 at 04:09 PM
+-- Generation Time: May 21, 2024 at 12:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,7 +65,7 @@ CREATE TABLE `houses` (
 
 INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `occupancy_status`, `capacity`, `address`) VALUES
 (1, '625', 4, 'Sample', 2500, 'Occupied', '1-3', ''),
-(5, '622', 2, '', 6000, 'Vacant', '1-3', ''),
+(5, '622', 2, '', 6000, 'Occupied', '1-3', ''),
 (6, '623', 1, '', 5000, 'Occupied', '1-3', ''),
 (7, '620', 1, '', 7000, 'Vacant', '1-3', ''),
 (8, '621', 1, '', 2222, 'Vacant', '1-3', '');
@@ -141,18 +141,19 @@ CREATE TABLE `tenants` (
 
 INSERT INTO `tenants` (`id`, `firstname`, `middlename`, `lastname`, `email`, `contact`, `house_id`, `status`, `date_in`, `contract_start`, `contract_end`) VALUES
 (2, 'Johns', 'C', 'Smiths', 'jsmith@sample.com', '+18456-5455-55', 1, 1, '2020-07-02', NULL, NULL),
-(3, 'AJ', 'C', 'Quiambao', 'aj@gmail.com', '0916', 3, 1, '2024-03-15', '2024-04-30', '2025-04-30'),
+(3, 'AJ', 'C', 'Quiambao', 'aj@gmail.com', '0916', 8, 1, '2024-03-15', '2024-04-30', '2025-04-30'),
 (4, 'Da', 'Dog', 'Pan', 'pandog@gmail.com', '9123823211', 4, 0, '0000-00-00', '2024-05-03', '2025-05-03'),
 (5, 'Dog', 'Per', 'Panda', 'pandog@gmail.com', '92138893123', 4, 0, '0000-00-00', '2024-04-24', '2025-04-24'),
-(6, '', '', '', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00'),
+(6, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
 (7, '33', '33', '123', '32131', '213213', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
 (8, '', '', 'Cyka', '', '', 4, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
 (9, '', '', 'Cyka', '', '', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
-(10, 'Loda', 'Loda', 'Panda ', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00'),
+(10, 'Loda', 'Loda', 'Panda ', '', '', 7, 1, '0000-00-00', '0000-00-00', '0000-00-00'),
 (11, '', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
 (12, 'Kekok', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
 (13, 'Kekok', '', 'Panda', '', '', 5, 1, '2024-04-30', '0000-00-00', '0000-00-00'),
-(14, '', '', '', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00');
+(14, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
+(15, 'Cy', 'No', 'Florendo', '', '', 6, 1, '2024-05-21', '2024-05-01', '2024-09-01');
 
 -- --------------------------------------------------------
 
@@ -227,7 +228,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `houses`
@@ -251,7 +252,7 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `tenants`
 --
 ALTER TABLE `tenants`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
