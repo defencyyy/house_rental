@@ -4,6 +4,8 @@
 <html>
 <head>
     <title>Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
@@ -130,44 +132,79 @@
     </script>
 
 </head>
+
+<?php
+$lifetimeEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments");
+$lifetimeEarnings = $lifetimeEarningsQuery->fetch_assoc()['total'];
+
+$previousMonth = date('Y-m', strtotime('-1 month'));
+$previousMonthEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments WHERE DATE_FORMAT(date_created, '%Y-%m') = '$previousMonth'");
+$previousMonthEarnings = $previousMonthEarningsQuery->fetch_assoc()['total'];
+
+$lastSixMonths = date('Y-m-d', strtotime('-6 months'));
+$lastSixMonthsEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments WHERE date_created >= '$lastSixMonths'");
+$lastSixMonthsEarnings = $lastSixMonthsEarningsQuery->fetch_assoc()['total'];
+?>
+
 <body>
     <h2 class="titlepage">Analytics</h2>
-    
     <div>
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card" style="width: 100%; height: 100%;">
                         <div class="card-body row justify-content-around align-items-center">
-                            <div class = "box">
-                                <img src="assets/pictures/available.png" id="icon">
-                                <h4 id = "title4"> Total Amount Earned </h4>
-                                <h3 id = "descr"> <?php echo $conn->query("SELECT * FROM houses")->num_rows ?> </h3>
+                            <div class="box">
+                                <img src="assets/pictures/dollar-sign-solid.svg" id="icon">
+                                <h4 id="title4"> Lifetime Earnings </h4>
+                                <h3 id="descr"><i class="fa-solid fa-peso-sign"></i> <?php echo number_format((float)$lifetimeEarnings, 2, '.', ','); ?></h3>
                             </div>
-                            <div class = "box">
-                            <img src="assets/pictures/available.png" id="icon">
-                                <h4 id = "title4"> Total Apartments </h4>
-                                <h3 id = "descr"> <?php echo $conn->query("SELECT * FROM houses")->num_rows ?> </h3>
+                            <div class="box">
+                                <img src="assets/pictures/receipt-solid.svg" id="icon">
+                                <h4 id="title4"> Previous Month's Earnings</h4>
+                                <h3 id="descr"><i class="fa-solid fa-peso-sign"></i> <?php echo number_format((float)$previousMonthEarnings, 2, '.', ','); ?></h3>
                             </div>
-                            <div class = "box">
-                            <img src="assets/pictures/available.png" id="icon">
-                                <h4 id = "title4"> Total Apartments </h4>
-                                <h3 id = "descr"> <?php echo $conn->query("SELECT * FROM houses")->num_rows ?> </h3>
+                            <div class="box">
+                                <img src="assets/pictures/file-invoice-dollar-solid.svg" id="icon">
+                                <h4 id="title4"> Last 6 Months' Earnings </h4>
+                                <h3 id="descr"><i class="fa-solid fa-peso-sign"></i> <?php echo number_format((float)$lastSixMonthsEarnings, 2, '.', ','); ?></h3>
                             </div>
-                            <div class = "box">
-                            <img src="assets/pictures/available.png" id="icon">
-                                <h4 id = "title4"> Total Apartments </h4>
-                                <h3 id = "descr"> <?php echo $conn->query("SELECT * FROM houses")->num_rows ?> </h3>
+                            <div class="box">
+                                <img src="assets/pictures/hand-holding-dollar-solid.svg" id="icon">
+                                <h4 id="title4"> Pending Payments </h4>
+                                <h3 id="descr">
+                                    <?php
+                                        $tenant = $conn->query("SELECT t.*, h.price FROM tenants t INNER JOIN houses h ON h.id = t.house_id WHERE t.status = 1");
+                                        $pendingPayments = 0;
+                                        while($row = $tenant->fetch_assoc()) {
+                                            $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['date_in']." 23:59:59"));
+                                            $months = floor(($months) / (30*60*60*24));
+                                            $payable = $row['price'] * $months;
+                                            $paid = $conn->query("SELECT SUM(amount) as paid FROM payments WHERE tenant_id = ".$row['id']);
+                                            $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : 0;
+                                            $outstanding = $payable - $paid;
+                                            if ($outstanding < 0) {
+                                                $pendingPayments++;
+                                            }
+                                        }
+                                        echo $pendingPayments;
+                                    ?>
+                                </h3>
                             </div>
-                            <div class = "box">
-                            <img src="assets/pictures/available.png" id="icon">
-                                <h4 id = "title4"> Total Apartments </h4>
-                                <h3 id = "descr"> <?php echo $conn->query("SELECT * FROM houses")->num_rows ?> </h3>
+                            <div class="box">
+                                <img src="assets/pictures/house-user-solid.svg" id="icon">
+                                <h4 id="title4"> Total Apartments </h4>
+                                <h3 id="descr"><?php echo $conn->query("SELECT * FROM houses")->num_rows; ?></h3>
                             </div>
-                            <div class = "box">
-                            <img src="assets/pictures/available.png" id="icon">
-                                <h4 id = "title4"> Total Apartments </h4>
-                                <h3 id = "descr"> <?php echo $conn->query("SELECT * FROM houses")->num_rows ?> </h3>
+                            <div class="box">
+                                <img src="assets/pictures/house-solid.svg" id="icon">
+                                <h4 id="title4"> Vacant Apartments</h4>
+                                <h3 id="descr">
+                                    <?php
+                                        $result = $conn->query("SELECT * FROM houses WHERE occupancy_status = 'Vacant'");
+                                        echo $result->num_rows;
+                                    ?>
+                                </h3>
                             </div>
                         </div>
                     </div>
@@ -184,11 +221,8 @@
                 </div>
             </div>
         </div>
-
-
     </div>
     
-
     <br>
 
     <div class="col-md-12">
@@ -196,7 +230,7 @@
             <div class="card-header">
                 <b>Timeline</b>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="width: 100%;">
                 <select id="tenantDropdown" onchange="onTenantChange()">
                     <option value="">Select Tenant</option>
                 </select>
