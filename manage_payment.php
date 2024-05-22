@@ -11,32 +11,32 @@ foreach($qry->fetch_array() as $k => $val){
     <form action="" id="manage-payment">
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
         <div id="msg"></div>
-        <div class="form-group">
-            <label for="" class="control-label">Tenant</label>
-            <select name="tenant_id" id="tenant_id" class="custom-select select2">
-                <option value=""></option>
+            <div class="form-group">
+                <label for="" class="control-label">Tenant</label>
+                <select name="tenant_id" id="tenant_id" class="custom-select select2">
+                    <option value=""></option>
 
-            <?php 
-            $tenant = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM tenants where status = 1 order by name asc");
-            while($row=$tenant->fetch_assoc()):
-            ?>
-            <option value="<?php echo $row['id'] ?>" <?php echo isset($tenant_id) && $tenant_id == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
-            <?php endwhile; ?>
-            </select>
-        </div>
-        <div class="form-group" id="details">
-            
-        </div>
+                <?php 
+                $tenant = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM tenants where status = 1 order by name asc");
+                while($row=$tenant->fetch_assoc()):
+                ?>
+                <option value="<?php echo $row['id'] ?>" <?php echo isset($tenant_id) && $tenant_id == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
+                <?php endwhile; ?>
+                </select>
+            </div>
+            <div class="form-group" id="details">
+                
+            </div>
 
-        <div class="form-group">
-            <label for="" class="control-label">Invoice: </label>
-            <input type="text" class="form-control" name="invoice"  value="<?php echo isset($invoice) ? $invoice :'' ?>" >
+            <div class="form-group">
+                <label for="" class="control-label">Invoice: </label>
+                <input type="text" class="form-control" name="invoice"  value="<?php echo isset($invoice) ? $invoice :'' ?>" >
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label">Amount Paid: </label>
+                <input type="number" class="form-control text-right" step="any" name="amount"  value="<?php echo isset($amount) ? $amount :'' ?>" >
+            </div>
         </div>
-        <div class="form-group">
-            <label for="" class="control-label">Amount Paid: </label>
-            <input type="number" class="form-control text-right" step="any" name="amount"  value="<?php echo isset($amount) ? $amount :'' ?>" >
-        </div>
-</div>
     </form>
 </div>
 <div id="details_clone" style="display: none">
@@ -55,7 +55,7 @@ foreach($qry->fetch_array() as $k => $val){
 <script>
     $(document).ready(function(){
         if('<?php echo isset($id)? 1:0 ?>' == 1)
-             $('#tenant_id').trigger('change') 
+            $('#tenant_id').trigger('change') 
     })
    $('.select2').select2({
     placeholder:"Please Select Here",
