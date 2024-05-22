@@ -104,11 +104,11 @@
 									<td class="">
 										<p>House #: <b><?php echo $row['house_no'] ?></b></p>
 										<p><small>House Type: <b><?php echo $row['cname'] ?></b></small></p>
-										<p><small>Description: <b><?php echo $row['description'] ?></b></small></p>
+										<p><small>Occupancy Status: <b><?php echo ucfirst($row['occupancy_status']) ?></b></small></p>
 										<p><small>Price: <b><?php echo number_format($row['price'],2) ?></b></small></p>
 										<p><small>Capacity: <b><?php echo $row['capacity'] ?></b></small></p>
-										<p><small>Occupancy Status: <b><?php echo ucfirst($row['occupancy_status']) ?></b></small></p>
 										<p><small>Address: <b><?php echo $row['address'] ?></b></small></p>
+										<p><small>Description: <b><?php echo $row['description'] ?></b></small></p>
 									</td>
 									<td class="text-center">
 										<button class="btn btn-sm btn-primary edit_house" type="button" data-id="<?php echo $row['id'] ?>"  data-house_no="<?php echo $row['house_no'] ?>" data-description="<?php echo $row['description'] ?>" data-category_id="<?php echo $row['category_id'] ?>" data-price="<?php echo $row['price'] ?>" data-capacity="<?php echo $row['capacity'] ?>" data-occupancy_status="<?php echo $row['occupancy_status'] ?>" data-address="<?php echo $row['address'] ?>">Edit</button>
@@ -170,19 +170,21 @@
 	})
 
 	$('.edit_house').click(function(){
-		start_load()
-		var cat = $('#manage-house')
-		cat.get(0).reset()
-		cat.find("[name='id']").val($(this).attr('data-id'))
-		cat.find("[name='house_no']").val($(this).attr('data-house_no'))
-		cat.find("[name='description']").val($(this).attr('data-description'))
-		cat.find("[name='price']").val($(this).attr('data-price'))
-		cat.find("[name='category_id']").val($(this).attr('data-category_id'))
-		cat.find("[name='capacity']").val($(this).attr('data-capacity'))
-		cat.find("[name='occupancy_status']").val($(this).attr('data-occupancy_status'))
-		cat.find("[name='address']").val($(this).attr('data-address'))
-		end_load()
-	})
+    start_load();
+    var cat = $('#manage-house');
+    cat.get(0).reset();
+    cat.find("[name='id']").val($(this).attr('data-id'));
+    cat.find("[name='house_no']").val($(this).attr('data-house_no'));
+    cat.find("[name='description']").val($(this).attr('data-description'));
+    cat.find("[name='price']").val($(this).attr('data-price'));
+    cat.find("[name='category_id']").val($(this).attr('data-category_id'));
+    cat.find("[name='occupancy_status']").val($(this).attr('data-occupancy_status'));
+    cat.find("[name='address']").val($(this).attr('data-address'));
+    var capacityValue = $(this).attr('data-capacity');
+    cat.find("[name='capacity'] option[value='" + capacityValue + "']").prop('selected', true);
+    end_load();
+});
+
 
 	$('.delete_house').click(function(){
 		_conf("Are you sure to delete this house?","delete_house",[$(this).attr('data-id')])
