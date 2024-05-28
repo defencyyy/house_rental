@@ -15,7 +15,6 @@
         var lineChart;
 
         function initCharts() {
-            // Fetch initial data from PHP
             <?php
             $query = "
                 SELECT payments.*, tenants.firstname, tenants.lastname
@@ -31,7 +30,7 @@
                 $tenant_name = $data['firstname'] . ' ' . $data['lastname'];
                 $dateObj = new DateTime($date_created);
                 $year = $dateObj->format('Y');
-                $month = $dateObj->format('m') - 1; // months are zero-indexed in JavaScript
+                $month = $dateObj->format('m') - 1;
                 $day = $dateObj->format('d');
                 echo "chartData.push([$amount, new Date($year, $month, $day), '$tenant_name']);\n";
                 if (!in_array($tenant_name, $tenantNames)) {
@@ -40,7 +39,6 @@
             }
             ?>
 
-            // Populate dropdown menu
             var dropdown = document.getElementById('tenantDropdown');
             var tenantNames = <?php echo json_encode($tenantNames); ?>;
             tenantNames.forEach(function(name) {
@@ -50,7 +48,6 @@
                 dropdown.add(option);
             });
 
-            // Draw initial line chart
             drawLineChart();
         }
 
@@ -60,23 +57,54 @@
             data.addColumn('number', 'Amount');
 
             var filteredData = chartData.filter(function(row) {
-                return row[2] == tenantName;
+                return tenantName ? row[2] == tenantName : true;
             });
 
             filteredData.forEach(function(row) {
                 data.addRow([row[1], row[0]]);
             });
 
+            var uniqueDates = [...new Set(filteredData.map(row => row[1]))];
+
+            var minDate = new Date(Math.min.apply(null, uniqueDates));
+            var maxDate = new Date(Math.max.apply(null, uniqueDates));
+
+            var dateMargin = 7;
+            minDate.setDate(minDate.getDate() - dateMargin);
+            maxDate.setDate(maxDate.getDate() + dateMargin);
+
             var options = {
                 title: "Tenant Payment History",
                 hAxis: {
                     title: 'Date Created',
-                    format: 'MMM dd, yyyy'
+                    format: 'MMM dd, yyyy',
+                    ticks: uniqueDates,
+                    viewWindow: {
+                        min: minDate,
+                        max: maxDate
+                    },
+                    gridlines: {
+                        color: 'transparent'
+                    }
                 },
                 vAxis: {
-                    title: 'Amount'
+                    title: 'Amount',
+                    ticks: [0, 2000, 4000, 6000, 8000, 10000],
+                    viewWindow: {
+                        min: 0,
+                        max: 10000
+                    },
+                    gridlines: {
+                        color: '#e0e0e0'
+                    }
                 },
-                legend: { position: 'bottom' }
+                legend: { position: 'bottom' },
+                series: {
+                    0: {
+                        pointShape: 'circle',
+                        pointSize: 10
+                    }
+                }
             };
 
             if (!lineChart) {
@@ -95,7 +123,6 @@
     <script type="text/javascript">
         google.charts.setOnLoadCallback(drawPieChart);
         function drawPieChart() {
-            // Fetch data from PHP
             <?php
                 $query = "
                     SELECT tenants.firstname, tenants.lastname, SUM(payments.amount) AS total_amount
@@ -111,14 +138,12 @@
                 }
             ?>
 
-            // Create pie chart data
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Tenant');
             data.addColumn('number', 'Total Amount');
 
             data.addRows(<?php echo json_encode($pieChartData); ?>);
 
-            // Set color options
             var colors = ['#3366cc', '#dc3912', '#ff9900', '#109618', '#990099'];
             var options = {
                 title: 'Total Amount Earned',
@@ -232,7 +257,7 @@ $lastSixMonthsEarnings = $lastSixMonthsEarningsQuery->fetch_assoc()['total'];
             </div>
             <div class="card-body" style="width: 100%;">
                 <select id="tenantDropdown" onchange="onTenantChange()">
-                    <option value="">Select Tenant</option>
+                    <option value="">All Tenants</option>
                 </select>
                 <div id="line_chart" style="width: 100%; height: 500px"></div>
             </div>
