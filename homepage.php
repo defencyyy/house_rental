@@ -66,8 +66,120 @@
   </section>
 
   <!-- ===== Data ===== -->
-  <section id="data">
-    <h2 id="title3"> Data Visualized </h2>
+  <section id = "data">
+    <h2 id="title3">Data Visualized</h2>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(initCharts);
+
+        var chartData = [];
+        var lineChart;
+
+        function initCharts() {
+            chartData = [
+                [6000, new Date(2024, 3, 29), 'Jane Smith'],
+                [5000, new Date(2024, 4, 21), 'John Doe'],
+                [2500, new Date(2024, 4, 21), 'Jane Smith'],
+                [7500, new Date(2024, 5, 26), 'John Doe'],
+                [7500, new Date(2024, 6, 23), 'John Doe'],
+            ];
+
+            var dropdown = document.getElementById('tenantDropdown');
+            var tenantNames = ['John Doe', 'Jane Smith'];
+            tenantNames.forEach(function(name) {
+                var option = document.createElement('option');
+                option.value = name;
+                option.text = name;
+                dropdown.add(option);
+            });
+
+            drawLineChart();
+        }
+
+        function drawLineChart(tenantName) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('date', 'Date Created');
+            data.addColumn('number', 'Amount');
+
+            var filteredData = chartData.filter(function(row) {
+                return tenantName ? row[2] == tenantName : true;
+            });
+
+            filteredData.forEach(function(row) {
+                data.addRow([row[1], row[0]]);
+            });
+
+            var uniqueDates = [...new Set(filteredData.map(row => row[1]))];
+
+            var minDate = new Date(Math.min.apply(null, uniqueDates));
+            var maxDate = new Date(Math.max.apply(null, uniqueDates));
+
+            var dateMargin = 7;
+            minDate.setDate(minDate.getDate() - dateMargin);
+            maxDate.setDate(maxDate.getDate() + dateMargin);
+
+            var options = {
+                title: "Tenant Payment History",
+                hAxis: {
+                    title: 'Date Created',
+                    format: 'MMM dd, yyyy',
+                    ticks: uniqueDates,
+                    viewWindow: {
+                        min: minDate,
+                        max: maxDate
+                    },
+                    gridlines: {
+                        color: 'transparent'
+                    }
+                },
+                vAxis: {
+                    title: 'Amount',
+                    ticks: [0, 2000, 4000, 6000, 8000, 10000],
+                    viewWindow: {
+                        min: 0,
+                        max: 10000
+                    },
+                    gridlines: {
+                        color: '#e0e0e0'
+                    }
+                },
+                legend: { position: 'bottom' },
+                series: {
+                    0: {
+                        pointShape: 'circle',
+                        pointSize: 10
+                    }
+                }
+            };
+
+            if (!lineChart) {
+                lineChart = new google.visualization.LineChart(document.getElementById('line_chart'));
+            }
+
+            lineChart.draw(data, options);
+        }
+
+        function onTenantChange() {
+            var tenantName = document.getElementById('tenantDropdown').value;
+            drawLineChart(tenantName);
+        }
+    </script>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <b>Select</b>
+            </div>
+            <div class="card-body" style="width: 100%;">
+                <select id="tenantDropdown" onchange="onTenantChange()">
+                    <option value="">All Tenants</option>
+                </select>
+                <div id="line_chart" style="width: 100%; height: 500px;"></div>
+            </div>
+        </div>
+    </div>
   </section>
 
   <!-- ===== About ===== -->

@@ -14,7 +14,6 @@ if(!isset($_SESSION['login_id'])) {
   <title><?php echo isset($_SESSION['system']['name']) ? $_SESSION['system']['name'] : '' ?></title>
  	<link rel="icon" type="image/png" href="assets\pictures\livwellLogo.png">
 
-
   <?php
     if(!isset($_SESSION['login_id']))
       header('location:login.php');
@@ -116,7 +115,8 @@ if(!isset($_SESSION['login_id'])) {
               <img src="" alt="">
       </div>
     </div>
-  </div>
+  </div>\
+  
 </body>
 <script>
 	 window.start_load = function(){
@@ -210,5 +210,7 @@ window._conf = function($msg='',$func='',$params = []){
     placeholder:"Please select here",
     width: "100%"
   })
+
+  
 </script>	
 </html>
