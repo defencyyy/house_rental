@@ -173,49 +173,6 @@ body {
   margin-bottom: 5px;
 }
 
-/* ===== Add New Apartment ===== */
-
-.wrapper1 {
-  align-items: center;
-  background-color: #e1d5c9;
-  width: 1519px;
-  height: 480px;
-  margin-top: 20px;
-  position: relative;
-}
-
-#title5 {
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.input-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-  position: relative;
-  top: 110px;
-}
-
-.custom-input {
-  padding: 10px;
-  margin-bottom: 2px;
-  border: none;
-  border-radius: 10px;
-  background-color: white;
-  outline: none;
-  width: 500px;
-}
-
-.title-input {
-  font-family: "Roboto", sans-serif;
-  margin-bottom: 2px;
-  margin-left: 5px;
-}
-
 /* ===== About Us ===== */
 .wrapper2 {
   align-items: center;
@@ -224,6 +181,10 @@ body {
   height: 600px;
   margin-top: 20px;
   position: relative;
+}
+
+#title5 {
+  padding-top: 50px;
 }
 
 #des {
