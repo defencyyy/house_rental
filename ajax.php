@@ -1,6 +1,6 @@
 <?php
 ob_start();
-$action = $_GET['action'];
+$action = isset($_GET['action']) ? $_GET['action'] : '';
 include 'admin_class.php';
 $crud = new Action();
 
@@ -58,6 +58,9 @@ switch($action) {
         break;
     case 'delete_payment':
         echo $crud->delete_payment();
+        break;
+    case 'delete_invoice': // Add this case for deleting invoice
+        echo $crud->delete_invoice(); // Calls the delete_invoice method
         break;
     default:
         echo "Invalid action";

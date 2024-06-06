@@ -1,11 +1,5 @@
 <?php 
 include 'db_connect.php'; 
-if(isset($_GET['id'])){
-    $qry = $conn->query("SELECT * FROM tenants where id= ".$_GET['id']);
-    foreach($qry->fetch_array() as $k => $val){
-        $$k=$val;
-    }
-}
 ?>
 <div class="container-fluid">
     <form action="" id="manage-tenant">
@@ -33,25 +27,27 @@ if(isset($_GET['id'])){
                 <label for="" class="control-label">Contact Number</label>
                 <input type="text" class="form-control" name="contact"  value="<?php echo isset($contact) ? $contact :'' ?>" required>
             </div>
-						<div class="col-md-4">
+            <div class="col-md-4">
                 <label for="" class="control-label">Registration Date</label>
                 <input type="date" class="form-control" name="date_in"  value="<?php echo isset($date_in) ? date("Y-m-d",strtotime($date_in)) :'' ?>" required>
             </div>
         </div>
         <div class="form-group row">
+                <div class="col-md-4">
+                    <label for="" class="control-label">House to Rent</label>
+                    <select name="house_id" id="" class="custom-select select2">
+                        <option value=""></option>
+                        <?php 
+                        $user_id = $_SESSION['login_id'];
+                        $house = $conn->query("SELECT * FROM houses WHERE id NOT IN (SELECT house_id FROM tenants WHERE status = 1 AND user_id = '$user_id') AND user_id = '$user_id' ".(isset($house_id) ? " OR id = $house_id" : ""));
+                        while($row = $house->fetch_assoc()):
+                        ?>
+                        <option value="<?php echo $row['id'] ?>" <?php echo isset($house_id) && $house_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['house_no'] ?></option>
+                        <?php endwhile; ?>
+                    </select>
+
+                </div>
             <div class="col-md-4">
-                <label for="" class="control-label">House to Rent</label>
-                <select name="house_id" id="" class="custom-select select2" required>
-                    <option value=""></option>
-                    <?php 
-                    $house = $conn->query("SELECT * FROM houses where id not in (SELECT house_id from tenants where status = 1) ".(isset($house_id)? " or id = $house_id": "" )." ");
-                    while($row= $house->fetch_assoc()):
-                    ?>
-                    <option value="<?php echo $row['id'] ?>" <?php echo isset($house_id) && $house_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['house_no'] ?></option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-						<div class="col-md-4">
                 <label for="" class="control-label">Contract Start</label>
                 <input type="date" class="form-control" name="contract_start" value="<?php echo isset($contract_start) ? $contract_start : '' ?>" required>
             </div>

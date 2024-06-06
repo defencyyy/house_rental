@@ -57,29 +57,28 @@ $user_id = $_SESSION['login_id'];
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                $i = 1;
-                                $category = $conn->query("
-                                    SELECT c.* 
-                                    FROM categories c
-                                    LEFT JOIN houses h ON h.category_id = c.id
-                                    WHERE h.user_id = '$user_id'
-                                    GROUP BY c.id
-                                    ORDER BY c.id ASC
-                                ");
-                                while($row = $category->fetch_assoc()):
-                                ?>
-                                <tr>
-                                    <td class="text-center"><?php echo $i++ ?></td>
-                                    <td class="">
-                                        <p><b><?php echo $row['name'] ?></b></p>
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="btn btn-sm btn-primary edit_category" type="button" data-id="<?php echo $row['id'] ?>"  data-name="<?php echo $row['name'] ?>" >Edit</button>
-                                        <button class="btn btn-sm btn-danger delete_category" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
-                                    </td>
-                                </tr>
-                                <?php endwhile; ?>
+                            <?php 
+                            $i = 1;
+                            $category = $conn->query("
+                                SELECT * 
+                                FROM categories 
+                                WHERE user_id = '$user_id'
+                                ORDER BY id ASC
+                            ");
+                            while($row = $category->fetch_assoc()):
+                            ?>
+                            <tr>
+                                <td class="text-center"><?php echo $i++ ?></td>
+                                <td class="">
+                                    <p><b><?php echo $row['name'] ?></b></p>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-primary edit_category" type="button" data-id="<?php echo $row['id'] ?>"  data-name="<?php echo $row['name'] ?>" >Edit</button>
+                                    <button class="btn btn-sm btn-danger delete_category" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
+                                </td>
+                            </tr>
+                            <?php endwhile; ?>
+
                             </tbody>
                         </table>
                     </div>

@@ -1,0 +1,69 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "14b0034d2142461a405b7fe0fd7eb66c",
+    "packages": [
+        {
+            "name": "vocolboy/php-emv-qrcode",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vocolboy/php-emv-qrcode.git",
+                "reference": "7617d1ddd22fd6fe2a57a4c63e57dca46713e885"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vocolboy/php-emv-qrcode/zipball/7617d1ddd22fd6fe2a57a4c63e57dca46713e885",
+                "reference": "7617d1ddd22fd6fe2a57a4c63e57dca46713e885",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.18"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Vocolboy\\PromptpayGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "vocolboy",
+                    "email": "vocolboy@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate PromptPay/TrueMoney/VietQR/PayMaya QRCode",
+            "keywords": [
+                "Promptpay",
+                "TrueMoney",
+                "paymaya",
+                "vietqr"
+            ],
+            "support": {
+                "issues": "https://github.com/vocolboy/php-emv-qrcode/issues",
+                "source": "https://github.com/vocolboy/php-emv-qrcode/tree/2.0.1"
+            },
+            "time": "2023-06-14T09:51:54+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}
