@@ -45,7 +45,7 @@ $outstanding = $payable - $paid;
 					</thead>
 					<tbody>
 						<?php 
-						$payments = $conn->query("SELECT * FROM payments where tenant_id = $id");
+						$payments = $conn->query("SELECT * FROM payments WHERE tenant_id = $id");
 						if($payments->num_rows > 0):
 						while($row=$payments->fetch_assoc()):
 						?>

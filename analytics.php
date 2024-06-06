@@ -1,4 +1,7 @@
-<?php include('db_connect.php'); ?>
+<?php 
+include('db_connect.php'); 
+$user_id = $_SESSION['login_id'];
+?>
 
 <!DOCTYPE html>
 <html>
@@ -20,6 +23,8 @@
                 SELECT payments.*, tenants.firstname, tenants.lastname
                 FROM payments
                 JOIN tenants ON payments.tenant_id = tenants.id
+                JOIN houses ON tenants.house_id = houses.id
+                WHERE houses.user_id = '$user_id'
             ";
             $res = mysqli_query($conn, $query);
             $tenantNames = [];
@@ -48,7 +53,12 @@
                 dropdown.add(option);
             });
 
-            drawLineChart();
+            if (chartData.length > 0) {
+                drawLineChart();
+            } else {
+                document.getElementById('line_chart').innerHTML = '<p>No data available for the line chart.</p>';
+            }
+
         }
 
         function drawLineChart(tenantName) {
@@ -57,14 +67,24 @@
             data.addColumn('number', 'Amount');
 
             var filteredData = chartData.filter(function(row) {
-                return tenantName ? row[2] == tenantName : true;
+                return tenantName ? row[2] === tenantName : true;
             });
 
             filteredData.forEach(function(row) {
                 data.addRow([row[1], row[0]]);
             });
 
+            if (filteredData.length === 0) {
+                document.getElementById('line_chart').innerHTML = '<p>No data available for the selected tenant.</p>';
+                return;
+            }
+
             var uniqueDates = [...new Set(filteredData.map(row => row[1]))];
+
+            if (uniqueDates.length === 0) {
+                document.getElementById('line_chart').innerHTML = '<p>No data available for the selected tenant.</p>';
+                return;
+            }
 
             var minDate = new Date(Math.min.apply(null, uniqueDates));
             var maxDate = new Date(Math.max.apply(null, uniqueDates));
@@ -114,6 +134,7 @@
             lineChart.draw(data, options);
         }
 
+
         function onTenantChange() {
             var tenantName = document.getElementById('tenantDropdown').value;
             drawLineChart(tenantName);
@@ -128,6 +149,8 @@
                     SELECT tenants.firstname, tenants.lastname, SUM(payments.amount) AS total_amount
                     FROM payments
                     JOIN tenants ON payments.tenant_id = tenants.id
+                    JOIN houses ON tenants.house_id = houses.id
+                    WHERE houses.user_id = '$user_id'
                     GROUP BY payments.tenant_id
                 ";
                 $res = mysqli_query($conn, $query);
@@ -159,15 +182,15 @@
 </head>
 
 <?php
-$lifetimeEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments");
+$lifetimeEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments JOIN tenants ON payments.tenant_id = tenants.id JOIN houses ON tenants.house_id = houses.id WHERE houses.user_id = '$user_id'");
 $lifetimeEarnings = $lifetimeEarningsQuery->fetch_assoc()['total'];
 
 $previousMonth = date('Y-m', strtotime('-1 month'));
-$previousMonthEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments WHERE DATE_FORMAT(date_created, '%Y-%m') = '$previousMonth'");
+$previousMonthEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments JOIN tenants ON payments.tenant_id = tenants.id JOIN houses ON tenants.house_id = houses.id WHERE houses.user_id = '$user_id' AND DATE_FORMAT(date_created, '%Y-%m') = '$previousMonth'");
 $previousMonthEarnings = $previousMonthEarningsQuery->fetch_assoc()['total'];
 
 $lastSixMonths = date('Y-m-d', strtotime('-6 months'));
-$lastSixMonthsEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments WHERE date_created >= '$lastSixMonths'");
+$lastSixMonthsEarningsQuery = $conn->query("SELECT SUM(amount) as total FROM payments JOIN tenants ON payments.tenant_id = tenants.id JOIN houses ON tenants.house_id = houses.id WHERE houses.user_id = '$user_id' AND date_created >= '$lastSixMonths'");
 $lastSixMonthsEarnings = $lastSixMonthsEarningsQuery->fetch_assoc()['total'];
 ?>
 
@@ -199,7 +222,7 @@ $lastSixMonthsEarnings = $lastSixMonthsEarningsQuery->fetch_assoc()['total'];
                                 <h4 id="title4"> Pending Payments </h4>
                                 <h3 id="descr">
                                     <?php
-                                        $tenant = $conn->query("SELECT t.*, h.price FROM tenants t INNER JOIN houses h ON h.id = t.house_id WHERE t.status = 1");
+                                        $tenant = $conn->query("SELECT t.*, h.price FROM tenants t INNER JOIN houses h ON h.id = t.house_id WHERE t.status = 1 AND h.user_id = '$user_id'");
                                         $pendingPayments = 0;
                                         while($row = $tenant->fetch_assoc()) {
                                             $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['date_in']." 23:59:59"));
@@ -219,14 +242,14 @@ $lastSixMonthsEarnings = $lastSixMonthsEarningsQuery->fetch_assoc()['total'];
                             <div class="box">
                                 <img src="assets/pictures/house-user-solid.svg" id="icon">
                                 <h4 id="title4"> Total Apartments </h4>
-                                <h3 id="descr"><?php echo $conn->query("SELECT * FROM houses")->num_rows; ?></h3>
+                                <h3 id="descr"><?php echo $conn->query("SELECT * FROM houses WHERE user_id = '$user_id'")->num_rows; ?></h3>
                             </div>
                             <div class="box">
                                 <img src="assets/pictures/house-solid.svg" id="icon">
                                 <h4 id="title4"> Vacant Apartments</h4>
                                 <h3 id="descr">
                                     <?php
-                                        $result = $conn->query("SELECT * FROM houses WHERE occupancy_status = 'Vacant'");
+                                        $result = $conn->query("SELECT * FROM houses WHERE occupancy_status = 'Vacant' AND user_id = '$user_id'");
                                         echo $result->num_rows;
                                     ?>
                                 </h3>
