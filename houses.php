@@ -95,8 +95,12 @@
 							</thead>
 							<tbody>
 								<?php 
+								$user_id = $_SESSION['login_id'];
 								$i = 1;
-								$house = $conn->query("SELECT h.*,c.name as cname FROM houses h inner join categories c on c.id = h.category_id order by id asc");
+								$house = $conn->query("SELECT h.*,c.name as cname FROM houses h 
+                      INNER JOIN categories c ON c.id = h.category_id 
+                      WHERE h.user_id = '$user_id' 
+                      ORDER BY id ASC");
 								while($row=$house->fetch_assoc()):
 								?>
 								<tr>

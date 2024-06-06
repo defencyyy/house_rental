@@ -19,22 +19,24 @@ class Action
 	}
 
 	function login()
-	{
-		extract($_POST);
-		$qry = $this->db->query("SELECT * FROM users where username = '" . $username . "' and password = '" . md5($password) . "' ");
-		if ($qry->num_rows > 0) {
-			$user = $qry->fetch_array();
-			$_SESSION['login_name'] = $user['username']; // Set the username in the session
-			foreach ($user as $key => $value) {
-				if (!is_numeric($key)) {
-					$_SESSION['login_' . $key] = $value;
-				}
-			}
-			return 1; // Return 1 for successful login
-		} else {
-			return 3; // Return 3 for login failed
-		}
-	}
+{
+    extract($_POST);
+    $qry = $this->db->query("SELECT * FROM users WHERE username = '$username' AND password = '" . md5($password) . "'");
+    if ($qry->num_rows > 0) {
+        $user = $qry->fetch_array();
+        $_SESSION['login_name'] = $user['username'];
+        $_SESSION['login_id'] = $user['id']; // Set the user ID in the session
+        foreach ($user as $key => $value) {
+            if (!is_numeric($key)) {
+                $_SESSION['login_' . $key] = $value;
+            }
+        }
+        return 1; // Return 1 for successful login
+    } else {
+        return 3; // Return 3 for login failed
+    }
+}
+
 
 	function login2()
 	{
@@ -249,8 +251,9 @@ class Action
 		}
 	}
 	function save_house()
-{
+	{
     extract($_POST);
+    $user_id = $_SESSION['login_id'];
     $data = " house_no = '$house_no' ";
     $data .= ", description = '$description' ";
     $data .= ", category_id = '$category_id' ";
@@ -258,15 +261,16 @@ class Action
     $data .= ", capacity = '$capacity' ";
     $data .= ", occupancy_status = '$occupancy_status' "; 
     $data .= ", address = '$address' "; 
+    $data .= ", user_id = '$user_id' "; 
 
     if (empty($id)) {
-        $chk = $this->db->query("SELECT * FROM houses WHERE house_no = '$house_no'")->num_rows;
+        $chk = $this->db->query("SELECT * FROM houses WHERE house_no = '$house_no' AND user_id = '$user_id'")->num_rows;
         if ($chk > 0) {
-            return 2;
+            return 2; 
         }
         $save = $this->db->query("INSERT INTO houses set $data");
     } else {
-        $chk = $this->db->query("SELECT * FROM houses WHERE house_no = '$house_no' AND id != '$id'")->num_rows;
+        $chk = $this->db->query("SELECT * FROM houses WHERE house_no = '$house_no' AND id != '$id' AND user_id = '$user_id'")->num_rows;
         if ($chk > 0) {
             return 2;
         }
@@ -277,7 +281,7 @@ class Action
         return 1;
     }
     return 0;
-}
+	}
 
 	function delete_house()
 	{
@@ -290,6 +294,7 @@ class Action
 	function save_tenant()
 	{
 			extract($_POST);
+			$user_id = $_SESSION['login_id']; 
 			$data = " firstname = '$firstname' ";
 			$data .= ", lastname = '$lastname' ";
 			$data .= ", middlename = '$middlename' ";
@@ -298,17 +303,33 @@ class Action
 			$data .= ", house_id = '$house_id' ";
 			$data .= ", date_in = '$date_in' ";
 			$data .= ", contract_start = '$contract_start' ";
-			$data .= ", contract_end = '$contract_end' ";    
-			
+			$data .= ", contract_end = '$contract_end' ";
+			$data .= ", user_id = '$user_id' "; 
+
 			if (empty($id)) {
 					$save = $this->db->query("INSERT INTO tenants set $data");
 			} else {
-					$save = $this->db->query("UPDATE tenants set $data where id = $id");
+					$save = $this->db->query("UPDATE tenants set $data where id = $id AND user_id = '$user_id'");
 			}
-			
-			if ($save)
+
+			if ($save) {
 					return 1;
+			}
+			return 0;
 	}
+
+	function get_houses()
+	{
+			$user_id = $_SESSION['login_id']; // Get the current user's ID
+			$qry = $this->db->query("SELECT * FROM houses WHERE user_id = '$user_id'");
+			$data = array();
+			while ($row = $qry->fetch_assoc()) {
+					$data[] = $row;
+			}
+			return $data;
+	}
+
+
 	
 	function delete_tenant()
 	{
