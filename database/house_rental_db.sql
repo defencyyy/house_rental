@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2024 at 09:32 AM
+-- Generation Time: Jun 06, 2024 at 04:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,19 +56,17 @@ CREATE TABLE `houses` (
   `price` double NOT NULL,
   `occupancy_status` enum('Occupied','Vacant','Maintenance') NOT NULL,
   `capacity` enum('1-3','4-6','7-9','10+') NOT NULL,
-  `address` varchar(50) NOT NULL
+  `address` varchar(50) NOT NULL,
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `houses`
 --
 
-INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `occupancy_status`, `capacity`, `address`) VALUES
-(1, '625', 4, 'Sample', 2500, 'Occupied', '1-3', ''),
-(5, '622', 2, '', 6000, 'Occupied', '1-3', ''),
-(6, '623', 1, '', 5000, 'Occupied', '1-3', ''),
-(7, '620', 1, '', 7000, 'Occupied', '1-3', ''),
-(8, '621', 1, '', 2222, 'Vacant', '1-3', '');
+INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `occupancy_status`, `capacity`, `address`, `user_id`) VALUES
+(10, '1A', 1, '', 5000, 'Vacant', '1-3', '', 9),
+(11, 'hehe', 1, '', 15555, 'Vacant', '1-3', '', 2);
 
 -- --------------------------------------------------------
 
@@ -91,9 +89,7 @@ CREATE TABLE `payments` (
 INSERT INTO `payments` (`id`, `tenant_id`, `amount`, `invoice`, `date_created`) VALUES
 (1, 2, 2500, '', '2020-10-26 11:29:35'),
 (2, 2, 7500, '', '2020-10-26 11:30:21'),
-(3, 3, 6000, '', '2024-04-29 14:28:33'),
-(4, 2, 5000, '', '2024-03-20 00:00:00'),
-(5, 3, 2500, '', '2024-05-21 23:37:52');
+(4, 2, 5000, '', '2024-03-20 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -134,29 +130,32 @@ CREATE TABLE `tenants` (
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 = active, 0= inactive',
   `date_in` date DEFAULT current_timestamp(),
   `contract_start` date DEFAULT NULL,
-  `contract_end` date DEFAULT NULL
+  `contract_end` date DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tenants`
 --
 
-INSERT INTO `tenants` (`id`, `firstname`, `middlename`, `lastname`, `email`, `contact`, `house_id`, `status`, `date_in`, `contract_start`, `contract_end`) VALUES
-(2, 'Johns', 'C', 'Smiths', 'jsmith@sample.com', '+18456-5455-55', 1, 1, '2020-07-02', NULL, NULL),
-(3, 'AJ', 'C', 'Quiambao', 'aj@gmail.com', '0916', 8, 1, '2024-03-15', '2024-04-30', '2025-04-30'),
-(4, 'Da', 'Dog', 'Pan', 'pandog@gmail.com', '9123823211', 4, 0, '0000-00-00', '2024-05-03', '2025-05-03'),
-(5, 'Dog', 'Per', 'Panda', 'pandog@gmail.com', '92138893123', 4, 0, '0000-00-00', '2024-04-24', '2025-04-24'),
-(6, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
-(7, '33', '33', '123', '32131', '213213', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
-(8, '', '', 'Cyka', '', '', 4, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
-(9, '', '', 'Cyka', '', '', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
-(10, 'Loda', 'Loda', 'Panda ', '', '', 7, 1, '0000-00-00', '0000-00-00', '0000-00-00'),
-(11, '', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
-(12, 'Kekok', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00'),
-(13, 'Kekok', '', 'Panda', '', '', 5, 1, '2024-04-30', '0000-00-00', '0000-00-00'),
-(14, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00'),
-(15, 'Cy', 'No', 'Florendo', '', '', 6, 1, '2024-05-21', '2024-05-01', '2024-09-01'),
-(16, 'thats', 'krazy', 'woah', 'hehe', '4431413', 0, 1, '2024-05-22', '2024-05-25', '2024-12-25');
+INSERT INTO `tenants` (`id`, `firstname`, `middlename`, `lastname`, `email`, `contact`, `house_id`, `status`, `date_in`, `contract_start`, `contract_end`, `user_id`) VALUES
+(2, 'Johns', 'C', 'Smiths', 'jsmith@sample.com', '+18456-5455-55', 1, 0, '2020-07-02', NULL, NULL, NULL),
+(3, 'AJ', 'C', 'Quiambao', 'aj@gmail.com', '0916', 8, 1, '2024-03-15', '2024-04-30', '2025-04-30', NULL),
+(4, 'Da', 'Dog', 'Pan', 'pandog@gmail.com', '9123823211', 4, 0, '0000-00-00', '2024-05-03', '2025-05-03', NULL),
+(5, 'Dog', 'Per', 'Panda', 'pandog@gmail.com', '92138893123', 4, 0, '0000-00-00', '2024-04-24', '2025-04-24', NULL),
+(6, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
+(7, '33', '33', '123', '32131', '213213', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
+(8, '', '', 'Cyka', '', '', 4, 0, '2024-04-30', '0000-00-00', '0000-00-00', NULL),
+(9, '', '', 'Cyka', '', '', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
+(10, 'Loda', 'Loda', 'Panda ', '', '', 7, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
+(11, '', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00', NULL),
+(12, 'Kekok', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00', NULL),
+(13, 'Kekok', '', 'Panda', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00', NULL),
+(14, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
+(15, 'Cy', 'No', 'Florendo', '', '', 0, 0, '2024-05-21', '2024-05-01', '2024-09-01', NULL),
+(16, 'thats', 'krazy', 'woah', 'hehe', '4431413', 0, 0, '2024-05-22', '2024-05-25', '2024-12-25', NULL),
+(17, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
+(18, '', '', 'ayo', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00', 2);
 
 -- --------------------------------------------------------
 
@@ -179,12 +178,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `username`, `password`) VALUES
 (2, 'aeronjquiambao@gmail.com', 'AERON JUSTIN', 'QUIAMBAO', 'Aj', '202cb962ac59075b964b07152d234b70'),
-(3, 'uyyn90786@gmail.com', 'Justa', 'Kori', 'Kim', '827ccb0eea8a706c4c34a16891f84e7b'),
-(4, 'aeronjustin.quiambao@tup.edu.ph', 'Summer', 'Solstice', 'Doggy', '202cb962ac59075b964b07152d234b70'),
-(5, 'piningcalautit@gmail.com', 'Justa', 'Kori', 'are', 'b0baee9d279d34fa1dfd71aadb908c3f'),
-(6, 'hehe@gmail.com', 'uiasdiua', 'ui', 'iu', 'cc20b377d2605ec536447da5d6d500e0'),
-(7, 'a@gmail.com', 'aaaa', 'lllll', '123123', '07f4aaf87a3d11457830ea799091ccfc'),
-(8, 'Abc@gmail.com', 'ABC', 'ABC', 'ABC', 'c6f8cf68e5f68b0aa4680e089ee4742c');
+(9, 'cyrusflorendo@yahoo.com', 'Cyrus', 'Florendo', 'Cyrus', '600e8ec58f4101dff6a5d7bb0a565c2e');
 
 --
 -- Indexes for dumped tables
@@ -234,13 +228,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -258,13 +252,13 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `tenants`
 --
 ALTER TABLE `tenants`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
