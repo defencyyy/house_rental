@@ -1,12 +1,16 @@
 <?php 
 include 'db_connect.php'; 
+session_start(); 
+$user_id = $_SESSION['login_id'];
 if(isset($_GET['id'])){
-    $qry = $conn->query("SELECT * FROM payments where id= ".$_GET['id']." and user_id='".$_SESSION['login_id']."'");
+    $qry = $conn->query("SELECT * FROM payments where id = ".$_GET['id']." and user_id = '".$_SESSION['login_id']."'");
     foreach($qry->fetch_array() as $k => $val){
         $$k=$val;
     }
+    $tenant_id = $tenant_id ?? ''; 
 }
 ?>
+
 <div class="container-fluid">
     <form action="" id="manage-payment">
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
@@ -15,10 +19,15 @@ if(isset($_GET['id'])){
             <label for="" class="control-label">Tenant</label>
             <select name="tenant_id" id="tenant_id" class="custom-select select2">
                 <option value=""></option>
+
                 <?php 
-                $tenant = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM tenants where status = 1 and user_id='".$_SESSION['login_id']."' order by name asc");
+                $user_id = $_SESSION['login_id'];
+                $tenant = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM tenants 
+                                        WHERE status = 1 AND user_id = '$user_id' 
+                                        order by name asc");
                 while($row=$tenant->fetch_assoc()):
                 ?>
+
                 <option value="<?php echo $row['id'] ?>" <?php echo isset($tenant_id) && $tenant_id == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
                 <?php endwhile; ?>
             </select>
@@ -34,6 +43,10 @@ if(isset($_GET['id'])){
             <label for="" class="control-label">Amount Paid: </label>
             <input type="number" class="form-control text-right" step="any" name="amount"  value="<?php echo isset($amount) ? $amount :'' ?>" >
         </div>
+        <div class="form-group">
+            <label for="" class="control-label">Payment Date: </label>
+            <input type="date" class="form-control" name="payment_date" value="<?php echo isset($payment_date) ? date("Y-m-d", strtotime($payment_date)) : date("Y-m-d") ?>" required>
+        </div>
     </form>
 </div>
 <div id="details_clone" style="display: none">
@@ -44,7 +57,6 @@ if(isset($_GET['id'])){
         <p>Monthly Rental Rate: <b class="price"></b></p>
         <p>Outstanding Balance: <b class="outstanding"></b></p>
         <p>Total Paid: <b class="total_paid"></b></p>
-        <p>Rent Started: <b class='rent_started'></b></p>
         <p>Payable Months: <b class="payable_months"></b></p>
         <hr>
     </div>
@@ -55,6 +67,7 @@ if(isset($_GET['id'])){
         if('<?php echo isset($id)? 1:0 ?>' == 1)
             $('#tenant_id').trigger('change') 
     })
+
    $('.select2').select2({
     placeholder:"Please Select Here",
     width:"100%"
@@ -76,7 +89,6 @@ if(isset($_GET['id'])){
                 details.find('.price').text(resp.price)
                 details.find('.outstanding').text(resp.outstanding)
                 details.find('.total_paid').text(resp.paid)
-                details.find('.rent_started').text(resp.rent_started)
                 details.find('.payable_months').text(resp.months)
                 console.log(details.html())
                 $('#details').html(details)

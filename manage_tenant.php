@@ -6,35 +6,31 @@ $user_id = $_SESSION['login_id'];
 <div class="container-fluid">
     <form action="" id="manage-tenant">
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
+        <!-- Hidden input field for registration date -->
+        <input type="hidden" name="date_in" id="date_in" value="<?php echo isset($date_in) ? date("Y-m-d", strtotime($date_in)) : '' ?>">
         <div class="row form-group">
             <div class="col-md-4">
                 <label for="" class="control-label">Last Name</label>
-                <input type="text" class="form-control" name="lastname"  value="<?php echo isset($lastname) ? $lastname :'' ?>" required>
+                <input type="text" class="form-control" name="lastname" value="<?php echo isset($lastname) ? $lastname :'' ?>" required>
             </div>
             <div class="col-md-4">
                 <label for="" class="control-label">First Name</label>
-                <input type="text" class="form-control" name="firstname"  value="<?php echo isset($firstname) ? $firstname :'' ?>" required>
+                <input type="text" class="form-control" name="firstname" value="<?php echo isset($firstname) ? $firstname :'' ?>" required>
             </div>
             <div class="col-md-4">
                 <label for="" class="control-label">Middle Name</label>
-                <input type="text" class="form-control" name="middlename"  value="<?php echo isset($middlename) ? $middlename :'' ?>">
+                <input type="text" class="form-control" name="middlename" value="<?php echo isset($middlename) ? $middlename :'' ?>">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-md-4">
                 <label for="" class="control-label">Email Address</label>
-                <input type="email" class="form-control" name="email"  value="<?php echo isset($email) ? $email :'' ?>" >
+                <input type="email" class="form-control" name="email" value="<?php echo isset($email) ? $email :'' ?>">
             </div>
             <div class="col-md-4">
                 <label for="" class="control-label">Contact Number</label>
-                <input type="text" class="form-control" name="contact"  value="<?php echo isset($contact) ? $contact :'' ?>" required>
+                <input type="text" class="form-control" name="contact" value="<?php echo isset($contact) ? $contact :'' ?>" required>
             </div>
-            <div class="col-md-4">
-                <label for="" class="control-label">Registration Date</label>
-                <input type="date" class="form-control" name="date_in"  value="<?php echo isset($date_in) ? date("Y-m-d",strtotime($date_in)) :'' ?>" required>
-            </div>
-        </div>
-        <div class="form-group row">
             <div class="col-md-4">
                 <label for="" class="control-label">House to Rent</label>
                 <select name="house_id" id="" class="custom-select select2">
@@ -46,8 +42,6 @@ $user_id = $_SESSION['login_id'];
                             " . (isset($house_id) ? " OR id = $house_id" : "");
 
                     $house = $conn->query($query);
-
-                    echo "<!-- $query -->";
 
                     if ($house === false) {
                         echo "Error: " . $conn->error;
@@ -65,6 +59,8 @@ $user_id = $_SESSION['login_id'];
                     ?>
                 </select>
             </div>
+        </div>
+        <div class="form-group row">
             <div class="col-md-4">
                 <label for="" class="control-label">Contract Start</label>
                 <input type="date" class="form-control" name="contract_start" value="<?php echo isset($contract_start) ? $contract_start : '' ?>" required>
@@ -77,27 +73,33 @@ $user_id = $_SESSION['login_id'];
     </form>
 </div>
 <script>
-    
+    $(document).ready(function() {
+        if ($('input[name="id"]').val() == '') {
+            var today = new Date().toISOString().split('T')[0];
+            $('#date_in').val(today);
+        }
+    });
+
     $('#manage-tenant').submit(function(e){
-        e.preventDefault()
-        start_load()
-        $('#msg').html('')
+        e.preventDefault();
+        start_load();
+        $('#msg').html('');
         $.ajax({
-            url:'ajax.php?action=save_tenant',
+            url: 'ajax.php?action=save_tenant',
             data: new FormData($(this)[0]),
             cache: false,
             contentType: false,
             processData: false,
             method: 'POST',
             type: 'POST',
-            success:function(resp){
-                if(resp==1){
-                    alert_toast("Data successfully saved.",'success')
-                        setTimeout(function(){
-                            location.reload()
-                        },1000)
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully saved.", 'success');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
                 }
             }
-        })
-    })
+        });
+    });
 </script>

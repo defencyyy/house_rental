@@ -38,15 +38,15 @@ use Vocolboy\PromptpayGenerator\GCashLib;
                             </thead>
                             <tbody>
                                 <?php
-																$user_id = $_SESSION['login_id'];
+                                $user_id = $_SESSION['login_id'];
                                 $i = 1;
                                 $invoices = $conn->query("SELECT p.*, CONCAT(t.lastname, ', ', t.firstname, ' ', t.middlename) AS name 
                                                           FROM payments p 
                                                           INNER JOIN tenants t ON t.id = p.tenant_id 
-                                                          WHERE t.status = 1 AND p.user_id = '$user_id' 
+                                                          WHERE p.user_id = '$user_id' 
                                                           ORDER BY DATE(p.date_created) DESC ");
                                 while ($row = $invoices->fetch_assoc()):
-                                    $qrCode = GCashLib::generate($row['gcash_id'], $row['name'], $row['amount']); // Generate QR Code
+                                //$qrCode = GCashLib::generate($row['gcash_id'], $row['name'], $row['amount']); // Generate QR Code
                                 ?>
                                 <tr>
                                     <td class="text-center"><?php echo $i++ ?></td>

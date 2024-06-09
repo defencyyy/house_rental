@@ -34,7 +34,6 @@ $name = $tenant['name'];
                     <p>Monthly Rental Rate: <b><?php echo isset($price) ? number_format($price,2) : '0.00' ?></b></p>
                     <p>Outstanding Balance: <b><?php echo isset($outstanding) ? number_format($outstanding,2) : '0.00' ?></b></p>
                     <p>Total Paid: <b><?php echo isset($paid) ? number_format($paid,2) : '0.00' ?></b></p>
-                    <p>Rent Started: <b><?php echo isset($date_in) ? date("M d, Y",strtotime($date_in)) : 'N/A' ?></b></p>
                     <p>Payable Months: <b><?php echo isset($months) ? $months : '0' ?></b></p>
                 </div>
             </div>
