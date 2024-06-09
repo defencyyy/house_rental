@@ -46,7 +46,7 @@ use Vocolboy\PromptpayGenerator\GCashLib;
                                                           WHERE p.user_id = '$user_id' 
                                                           ORDER BY DATE(p.date_created) DESC ");
                                 while ($row = $invoices->fetch_assoc()):
-                                //$qrCode = GCashLib::generate($row['gcash_id'], $row['name'], $row['amount']); // Generate QR Code
+                                $qrCode = GCashLib::generate($row['gcash_id'], $row['name'], $row['amount']); // Generate QR Code
                                 ?>
                                 <tr>
                                     <td class="text-center"><?php echo $i++ ?></td>

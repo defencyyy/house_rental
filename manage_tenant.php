@@ -2,6 +2,16 @@
 include('db_connect.php');
 session_start(); 
 $user_id = $_SESSION['login_id'];
+
+if (isset($_GET['id'])) {
+    $qry = $conn->query("SELECT * FROM tenants WHERE id = " . $_GET['id'] . " AND user_id = '$user_id'");
+    if ($qry->num_rows > 0) {
+        $tenant = $qry->fetch_assoc();
+        foreach($tenant as $k => $v){
+            $$k = $v;
+        }
+    }
+}
 ?>
 <div class="container-fluid">
     <form action="" id="manage-tenant">
