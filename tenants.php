@@ -52,7 +52,7 @@ $user_id = $_SESSION['login_id'];
                         WHERE t.status = 1 AND t.user_id = '$user_id' AND h.id IS NOT NULL
                         ORDER BY h.house_no DESC");
                     while($row=$tenant->fetch_assoc()):
-                        $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['date_in']." 23:59:59"));
+                        $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['contract_start']." 23:59:59"));
                         $months = floor(($months) / (30*60*60*24));
                         $payable = $row['price'] * $months;
                         $paid = $conn->query("SELECT SUM(amount) as paid FROM payments where tenant_id =".$row['id']);
@@ -127,7 +127,7 @@ $user_id = $_SESSION['login_id'];
                         WHERE t.status = 1 
                         ORDER BY h.house_no DESC ");
                     while($row = $tenant->fetch_assoc()):
-                        $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['date_in']." 23:59:59"));
+                        $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['contract_start']." 23:59:59"));
                         $months = floor(($months) / (30*60*60*24));
                         $payable = $row['price'] * $months;
                         $paid = $conn->query("SELECT SUM(amount) as paid FROM payments where tenant_id =".$row['id']);

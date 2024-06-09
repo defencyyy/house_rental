@@ -1,5 +1,7 @@
 <?php 
-include 'db_connect.php'; 
+include('db_connect.php');
+session_start(); 
+$user_id = $_SESSION['login_id'];
 ?>
 <div class="container-fluid">
     <form action="" id="manage-tenant">
@@ -33,20 +35,36 @@ include 'db_connect.php';
             </div>
         </div>
         <div class="form-group row">
-                <div class="col-md-4">
-                    <label for="" class="control-label">House to Rent</label>
-                    <select name="house_id" id="" class="custom-select select2">
-                        <option value=""></option>
-                        <?php 
-                        $user_id = $_SESSION['login_id'];
-                        $house = $conn->query("SELECT * FROM houses WHERE id NOT IN (SELECT house_id FROM tenants WHERE status = 1 AND user_id = '$user_id') AND user_id = '$user_id' ".(isset($house_id) ? " OR id = $house_id" : ""));
-                        while($row = $house->fetch_assoc()):
-                        ?>
-                        <option value="<?php echo $row['id'] ?>" <?php echo isset($house_id) && $house_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['house_no'] ?></option>
-                        <?php endwhile; ?>
-                    </select>
+            <div class="col-md-4">
+                <label for="" class="control-label">House to Rent</label>
+                <select name="house_id" id="" class="custom-select select2">
+                    <option value=""></option>
+                    <?php 
+                    $query = "SELECT * FROM houses 
+                            WHERE id NOT IN (SELECT house_id FROM tenants WHERE status = 1 AND user_id = '$user_id') 
+                            AND user_id = '$user_id' 
+                            " . (isset($house_id) ? " OR id = $house_id" : "");
 
-                </div>
+                    $house = $conn->query($query);
+
+                    echo "<!-- $query -->";
+
+                    if ($house === false) {
+                        echo "Error: " . $conn->error;
+                    } else {
+                        if ($house->num_rows > 0) {
+                            while($row = $house->fetch_assoc()):
+                    ?>
+                    <option value="<?php echo $row['id'] ?>" <?php echo isset($house_id) && $house_id == $row['id'] ? 'selected' : '' ?>><?php echo $row['house_no'] ?></option>
+                    <?php 
+                            endwhile;
+                        } else {
+                            echo "<option value=''>No houses available</option>";
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
             <div class="col-md-4">
                 <label for="" class="control-label">Contract Start</label>
                 <input type="date" class="form-control" name="contract_start" value="<?php echo isset($contract_start) ? $contract_start : '' ?>" required>

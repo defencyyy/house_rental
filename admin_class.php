@@ -305,6 +305,7 @@ class Action
 {
     extract($_POST);
     $user_id = $_SESSION['login_id']; // Get the current user's ID
+    $status = isset($house_id) && !empty($house_id) ? 1 : 0; // Check if house is selected
     $data = " firstname = '$firstname' ";
     $data .= ", lastname = '$lastname' ";
     $data .= ", middlename = '$middlename' ";
@@ -315,6 +316,8 @@ class Action
     $data .= ", contract_start = '$contract_start' ";
     $data .= ", contract_end = '$contract_end' ";
     $data .= ", user_id = '$user_id' "; // Add the user_id
+    $data .= ", status = '$status' "; // Add the status
+
     if (empty($id)) {
         $save = $this->db->query("INSERT INTO tenants set $data");
     } else {
@@ -326,6 +329,7 @@ class Action
     }
     return 0;
 }
+
 
     function get_houses()
     {
@@ -353,34 +357,34 @@ class Action
         return 0;
     }
 
-		function get_tdetails()
-		{
-				extract($_POST);
-				$data = array();
-				$user_id = $_SESSION['login_id'];
-				$tenants = $this->db->query("SELECT t.*,concat(t.lastname,', ',t.firstname,' ',t.middlename) as name,h.house_no,h.price FROM tenants t inner join houses h on h.id = t.house_id where t.id = {$id} AND t.user_id = '$user_id'");
-				foreach ($tenants->fetch_array() as $k => $v) {
-						if (!is_numeric($k)) {
-								$$k = $v;
-						}
-				}
-				$months = abs(strtotime(date('Y-m-d') . " 23:59:59") - strtotime($date_in . " 23:59:59"));
-				$months = floor(($months) / (30 * 60 * 60 * 24));
-				$data['months'] = $months;
-				$payable = abs($price * $months);
-				$data['payable'] = number_format($payable, 2);
-				$paid = $this->db->query("SELECT SUM(amount) as paid FROM payments where tenant_id =" . $id);
-				$last_payment = $this->db->query("SELECT * FROM payments where tenant_id =" . $id . " order by unix_timestamp(date_created) desc limit 1");
-				$paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : 0;
-				$data['paid'] = number_format($paid, 2);
-				$data['last_payment'] = $last_payment->num_rows > 0 ? date("M d, Y", strtotime($last_payment->fetch_array()['date_created'])) : 'N/A';
-				$data['outstanding'] = number_format($payable - $paid, 2);
-				$data['price'] = number_format($price, 2);
-				$data['name'] = ucwords($name);
-				$data['rent_started'] = date('M d, Y', strtotime($date_in));
-		
-				return json_encode($data);
-		}
+    function get_tdetails()
+    {
+            extract($_POST);
+            $data = array();
+            $user_id = $_SESSION['login_id'];
+            $tenants = $this->db->query("SELECT t.*,concat(t.lastname,', ',t.firstname,' ',t.middlename) as name,h.house_no,h.price FROM tenants t inner join houses h on h.id = t.house_id where t.id = {$id} AND t.user_id = '$user_id'");
+            foreach ($tenants->fetch_array() as $k => $v) {
+                    if (!is_numeric($k)) {
+                            $$k = $v;
+                    }
+            }
+            $months = abs(strtotime(date('Y-m-d') . " 23:59:59") - strtotime($date_in . " 23:59:59"));
+            $months = floor(($months) / (30 * 60 * 60 * 24));
+            $data['months'] = $months;
+            $payable = abs($price * $months);
+            $data['payable'] = number_format($payable, 2);
+            $paid = $this->db->query("SELECT SUM(amount) as paid FROM payments where tenant_id =" . $id);
+            $last_payment = $this->db->query("SELECT * FROM payments where tenant_id =" . $id . " order by unix_timestamp(date_created) desc limit 1");
+            $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : 0;
+            $data['paid'] = number_format($paid, 2);
+            $data['last_payment'] = $last_payment->num_rows > 0 ? date("M d, Y", strtotime($last_payment->fetch_array()['date_created'])) : 'N/A';
+            $data['outstanding'] = number_format($payable - $paid, 2);
+            $data['price'] = number_format($price, 2);
+            $data['name'] = ucwords($name);
+            $data['rent_started'] = date('M d, Y', strtotime($date_in));
+    
+            return json_encode($data);
+    }
 
     function save_payment()
     {

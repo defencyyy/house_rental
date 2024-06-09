@@ -49,6 +49,7 @@ if(isset($_GET['id'])){
         <hr>
     </div>
 </div>
+
 <script>
     $(document).ready(function(){
         if('<?php echo isset($id)? 1:0 ?>' == 1)
