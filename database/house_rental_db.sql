@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2024 at 04:44 AM
+-- Generation Time: Jun 09, 2024 at 07:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categories` (
   `id` int(30) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -36,11 +37,14 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Studio-Type Home'),
-(2, 'Bungalow Home'),
-(3, 'Two-Story Home'),
-(4, 'Other Type');
+INSERT INTO `categories` (`id`, `user_id`, `name`) VALUES
+(1, NULL, 'Studio-Type Home'),
+(2, NULL, 'Bungalow Home'),
+(3, NULL, 'Two-Story Home'),
+(4, NULL, 'Other Type'),
+(8, 2, 'Condominum'),
+(9, 2, 'Bungalow'),
+(11, 2, 'Two-Story');
 
 -- --------------------------------------------------------
 
@@ -66,7 +70,8 @@ CREATE TABLE `houses` (
 
 INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `occupancy_status`, `capacity`, `address`, `user_id`) VALUES
 (10, '1A', 1, '', 5000, 'Vacant', '1-3', '', 9),
-(11, 'hehe', 1, '', 15555, 'Vacant', '1-3', '', 2);
+(13, '1A', 8, '', 12000, 'Vacant', '1-3', 'Makati', 2),
+(14, '1B', 8, '', 11000, 'Vacant', '1-3', 'Makati', 2);
 
 -- --------------------------------------------------------
 
@@ -76,6 +81,7 @@ INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `
 
 CREATE TABLE `payments` (
   `id` int(30) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `tenant_id` int(30) NOT NULL,
   `amount` float NOT NULL,
   `invoice` varchar(50) NOT NULL,
@@ -86,10 +92,10 @@ CREATE TABLE `payments` (
 -- Dumping data for table `payments`
 --
 
-INSERT INTO `payments` (`id`, `tenant_id`, `amount`, `invoice`, `date_created`) VALUES
-(1, 2, 2500, '', '2020-10-26 11:29:35'),
-(2, 2, 7500, '', '2020-10-26 11:30:21'),
-(4, 2, 5000, '', '2024-03-20 00:00:00');
+INSERT INTO `payments` (`id`, `user_id`, `tenant_id`, `amount`, `invoice`, `date_created`) VALUES
+(1, NULL, 2, 2500, '', '2020-10-26 11:29:35'),
+(2, NULL, 2, 7500, '', '2020-10-26 11:30:21'),
+(4, NULL, 2, 5000, '', '2024-03-20 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -139,23 +145,8 @@ CREATE TABLE `tenants` (
 --
 
 INSERT INTO `tenants` (`id`, `firstname`, `middlename`, `lastname`, `email`, `contact`, `house_id`, `status`, `date_in`, `contract_start`, `contract_end`, `user_id`) VALUES
-(2, 'Johns', 'C', 'Smiths', 'jsmith@sample.com', '+18456-5455-55', 1, 0, '2020-07-02', NULL, NULL, NULL),
-(3, 'AJ', 'C', 'Quiambao', 'aj@gmail.com', '0916', 8, 1, '2024-03-15', '2024-04-30', '2025-04-30', NULL),
-(4, 'Da', 'Dog', 'Pan', 'pandog@gmail.com', '9123823211', 4, 0, '0000-00-00', '2024-05-03', '2025-05-03', NULL),
-(5, 'Dog', 'Per', 'Panda', 'pandog@gmail.com', '92138893123', 4, 0, '0000-00-00', '2024-04-24', '2025-04-24', NULL),
-(6, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
-(7, '33', '33', '123', '32131', '213213', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
-(8, '', '', 'Cyka', '', '', 4, 0, '2024-04-30', '0000-00-00', '0000-00-00', NULL),
-(9, '', '', 'Cyka', '', '', 4, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
-(10, 'Loda', 'Loda', 'Panda ', '', '', 7, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
-(11, '', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00', NULL),
-(12, 'Kekok', '', 'Pando', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00', NULL),
-(13, 'Kekok', '', 'Panda', '', '', 5, 0, '2024-04-30', '0000-00-00', '0000-00-00', NULL),
-(14, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
-(15, 'Cy', 'No', 'Florendo', '', '', 0, 0, '2024-05-21', '2024-05-01', '2024-09-01', NULL),
-(16, 'thats', 'krazy', 'woah', 'hehe', '4431413', 0, 0, '2024-05-22', '2024-05-25', '2024-12-25', NULL),
-(17, '', '', '', '', '', 0, 0, '0000-00-00', '0000-00-00', '0000-00-00', NULL),
-(18, '', '', 'ayo', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00', 2);
+(30, '', '', 'Cy', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00', 2),
+(31, '', '', 'Woah', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00', 2);
 
 -- --------------------------------------------------------
 
@@ -228,13 +219,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -252,7 +243,7 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `tenants`
 --
 ALTER TABLE `tenants`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `users`
