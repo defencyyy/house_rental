@@ -124,7 +124,7 @@ $user_id = $_SESSION['login_id'];
                         h.house_no, h.price, t.contract_start, t.contract_end 
                         FROM tenants t 
                         LEFT JOIN houses h ON h.id = t.house_id 
-                        WHERE t.status = 1 
+                        WHERE t.user_id = '$user_id'
                         ORDER BY h.house_no DESC ");
                     while($row = $tenant->fetch_assoc()):
                         $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['contract_start']." 23:59:59"));
