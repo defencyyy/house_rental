@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2024 at 04:55 PM
+-- Generation Time: Jun 10, 2024 at 08:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,9 +38,9 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `user_id`, `name`) VALUES
-(8, 2, 'Condominum'),
-(9, 2, 'Bungalow'),
-(11, 2, 'Two-Story');
+(1, 1, 'Condominum'),
+(2, 1, 'Bungalow'),
+(3, 1, 'Two-Story');
 
 -- --------------------------------------------------------
 
@@ -65,9 +65,26 @@ CREATE TABLE `houses` (
 --
 
 INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `occupancy_status`, `capacity`, `address`, `user_id`) VALUES
-(10, '1A', 1, '', 5000, 'Vacant', '1-3', '', 9),
-(13, '1A', 8, '', 12000, 'Occupied', '1-3', 'Makati', 2),
-(14, '1B', 8, '', 11000, 'Vacant', '1-3', 'Makati', 2);
+(1, 'MK334', 1, '', 15000, 'Occupied', '1-3', 'Makati', 1),
+(2, 'MK335', 1, '', 15000, 'Occupied', '1-3', 'Makati', 1),
+(3, 'MK337', 1, '', 15000, 'Occupied', '1-3', 'Makati', 1),
+(4, 'MK421', 1, '', 14000, 'Occupied', '1-3', 'Makati', 1),
+(5, 'MK422', 1, '', 14000, 'Occupied', '1-3', 'Makati', 1),
+(6, 'LP10A', 2, '', 6500, 'Occupied', '1-3', 'Las Piñas', 1),
+(7, 'LP10B', 2, '', 6500, 'Occupied', '1-3', 'Las Piñas', 1),
+(8, 'LP11A', 3, '', 8000, 'Vacant', '1-3', 'Las Piñas', 1),
+(9, 'LP12A', 3, '', 8500, 'Maintenance', '1-3', 'Las Piñas', 1),
+(10, 'LP13A', 3, '', 10000, 'Vacant', '4-6', '', 1),
+(11, 'BF30', 2, '', 10000, 'Maintenance', '4-6', 'BF Homes LP', 1),
+(12, 'BF31', 2, '', 11000, 'Maintenance', '4-6', 'BF Homes LP', 1),
+(13, 'BF8B', 2, '', 9000, 'Occupied', '1-3', 'BF Homes LP', 1),
+(14, 'BF8C', 2, '', 7500, 'Occupied', '1-3', 'BF Homes LP', 1),
+(15, 'BF9', 3, '', 9500, 'Vacant', '4-6', 'BF Homes LP', 1),
+(16, 'BF7', 3, '', 10000, 'Vacant', '4-6', 'BF Homes LP', 1),
+(17, 'MNL534', 1, '', 8500, 'Vacant', '1-3', 'Manila', 1),
+(18, 'MNL535', 1, '', 8500, 'Maintenance', '1-3', '', 1),
+(19, 'MNL533', 1, '', 8500, 'Vacant', '1-3', '', 1),
+(20, 'MNL536', 1, '', 8500, 'Vacant', '1-3', '', 1);
 
 -- --------------------------------------------------------
 
@@ -89,9 +106,41 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `user_id`, `tenant_id`, `amount`, `invoice`, `date_created`) VALUES
-(8, 2, 33, 123, '', '2024-06-10 21:11:36'),
-(9, 2, 33, 123, '', '2024-06-10 21:12:40'),
-(10, 2, 33, 246, '', '2024-06-10 21:19:29');
+(1, 1, 8, 6500, '', '2024-02-12 00:00:00'),
+(4, 1, 8, 6500, '', '2024-01-11 00:00:00'),
+(5, 1, 8, 6500, '', '2024-03-12 00:00:00'),
+(6, 1, 8, 6500, '', '2024-04-13 00:00:00'),
+(7, 1, 8, 6500, '', '2024-05-16 00:00:00'),
+(15, 1, 7, 6500, '', '2023-12-16 00:00:00'),
+(16, 1, 7, 6500, '', '2024-01-10 00:00:00'),
+(17, 1, 7, 4500, '', '2024-02-14 00:00:00'),
+(18, 1, 0, 8500, '', '2024-03-07 00:00:00'),
+(19, 1, 7, 6500, '', '2024-04-20 00:00:00'),
+(20, 1, 7, 6500, '', '2024-05-20 00:00:00'),
+(22, 1, 7, 2000, '', '2024-06-07 00:00:00'),
+(26, 1, 3, 30000, '', '2023-10-06 00:00:00'),
+(27, 1, 3, 15000, '', '2023-12-14 00:00:00'),
+(28, 1, 3, 15000, '', '2024-01-01 00:00:00'),
+(29, 1, 3, 12000, '', '2024-02-06 00:00:00'),
+(30, 1, 3, 18000, '', '2024-03-07 00:00:00'),
+(31, 1, 3, 10000, '', '2024-04-11 00:00:00'),
+(32, 1, 3, 20000, '', '2024-05-31 00:00:00'),
+(33, 1, 5, 14000, '', '2024-05-10 00:00:00'),
+(34, 1, 4, 20000, '', '2024-01-11 00:00:00'),
+(35, 1, 4, 8000, '', '2024-02-16 00:00:00'),
+(36, 1, 4, 14000, '', '2024-03-15 00:00:00'),
+(37, 1, 4, 14000, '', '2024-04-12 00:00:00'),
+(38, 1, 4, 10000, '', '2024-05-25 00:00:00'),
+(39, 1, 2, 30000, '', '2024-04-19 00:00:00'),
+(40, 1, 1, 15000, '', '2024-02-16 00:00:00'),
+(41, 1, 1, 15000, '', '2024-03-16 00:00:00'),
+(42, 1, 1, 15000, '', '2024-04-17 00:00:00'),
+(43, 1, 1, 15000, '', '2024-05-16 00:00:00'),
+(44, 1, 10, 7500, '', '2024-03-15 00:00:00'),
+(45, 1, 10, 7500, '', '2024-04-26 00:00:00'),
+(46, 1, 10, 5000, '', '2024-05-18 00:00:00'),
+(47, 1, 11, 9000, '', '2024-04-19 00:00:00'),
+(48, 1, 11, 6000, '', '2024-05-11 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -141,8 +190,17 @@ CREATE TABLE `tenants` (
 --
 
 INSERT INTO `tenants` (`id`, `firstname`, `middlename`, `lastname`, `email`, `contact`, `house_id`, `status`, `date_in`, `contract_start`, `contract_end`, `user_id`) VALUES
-(32, 'test', '', 'test', '', '', 0, 0, '2024-06-10', '0000-00-00', '0000-00-00', 2),
-(33, 'new', '', 'test new', '', '', 13, 1, '2024-06-10', '0000-00-00', '0000-00-00', 2);
+(1, 'Juan', 'Cruz', 'Santos', 'juan.santos@example.com', '09171234567', 1, 1, '2024-03-04', '2024-02-05', '2025-06-15', 1),
+(2, 'Maria', 'Diaz', 'Reyes', 'maria.reyes@example.com', '09181234567', 2, 1, '2024-06-10', '2024-04-10', '2024-12-10', 1),
+(3, 'Jose', 'dela Cruz', 'Bautista', 'jose.bautista@example.com', '09192234567', 3, 1, '2025-02-05', '2023-10-06', '2025-10-06', 1),
+(4, 'Ana', 'Mendoza', 'Garcia', 'ana.garcia@example.com', '09193234567', 4, 1, '2024-06-10', '2024-01-06', '2025-01-06', 1),
+(5, 'Pedro', 'Santos', 'Lopez', 'pedro.lopez@example.com', '09194234567', 5, 1, '2024-05-04', '2024-05-10', '2024-12-10', 1),
+(6, 'Elena', 'Reyes', 'Aquino', 'elena.aquino@example.com', '09195234567', 0, 0, '2024-06-10', '2025-01-01', '2025-06-01', 1),
+(7, 'Luz', 'Martinez', 'Dela Cruz', 'luz.delacruz@example.com', '09197234567', 6, 1, '2024-06-10', '2023-12-02', '2025-06-02', 1),
+(8, 'Rafael', 'Aquino', 'Flores', 'rafael.flores@example.com', '09198234567', 7, 1, '2024-01-17', '2024-01-10', '2025-04-10', 1),
+(9, 'Isabel', 'Bautista', 'Ramos', 'isabel.ramos@example.com', '09199234567', 0, 0, '2024-06-10', '2025-01-03', '2026-01-03', 1),
+(10, 'Luis', 'Santos', 'Mendoza', 'luis.mendoza@example.com', '09170234567', 14, 1, '2024-06-10', '2024-03-02', '2025-02-02', 1),
+(11, 'Teresa', 'Lopez', 'Navarro', 'teresa.navarro@example.com', '09171234568', 13, 1, '2024-06-10', '2024-04-06', '2025-06-06', 1);
 
 -- --------------------------------------------------------
 
@@ -164,8 +222,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `username`, `password`) VALUES
-(2, 'aeronjquiambao@gmail.com', 'AERON JUSTIN', 'QUIAMBAO', 'Aj', '202cb962ac59075b964b07152d234b70'),
-(9, 'cyrusflorendo@yahoo.com', 'Cyrus', 'Florendo', 'Cyrus', '600e8ec58f4101dff6a5d7bb0a565c2e');
+(1, 'cyrusnathaniel.florendo@tup.edu.ph', 'Cyrus', 'Florendo', 'CyFlo', '420e57b017066b44e05ea1577f6e2e12');
 
 --
 -- Indexes for dumped tables
@@ -215,19 +272,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `system_settings`
@@ -239,13 +296,13 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `tenants`
 --
 ALTER TABLE `tenants`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
