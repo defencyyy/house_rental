@@ -1,6 +1,4 @@
 <?php
-require 'vendor/autoload.php';
-use Vocolboy\PromptpayGenerator\GCashLib;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $payeeUserId = $_POST['payeeUserId'];

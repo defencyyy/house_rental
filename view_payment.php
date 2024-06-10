@@ -13,14 +13,22 @@ foreach($tenant as $k => $v){
         $$k = $v;
     }
 }
-$months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($date_in." 23:59:59"));
-$months = floor(($months) / (30*60*60*24));
+
+$start_date = new DateTime($contract_start);
+$current_date = new DateTime();
+$interval = $start_date->diff($current_date);
+$months = $interval->y * 12 + $interval->m;
+
 $payable = $price * $months;
+
 $paid_result = $conn->query("SELECT SUM(amount) as paid FROM payments WHERE tenant_id = $id");
 $paid = $paid_result->num_rows > 0 ? $paid_result->fetch_array()['paid'] : 0;
+
 $last_payment_result = $conn->query("SELECT * FROM payments WHERE tenant_id = $id ORDER BY UNIX_TIMESTAMP(date_created) DESC LIMIT 1");
 $last_payment = $last_payment_result->num_rows > 0 ? date("M d, Y",strtotime($last_payment_result->fetch_array()['date_created'])) : 'N/A';
+
 $outstanding = $payable - $paid;
+
 $name = $tenant['name'];
 ?>
 <div class="container-fluid">

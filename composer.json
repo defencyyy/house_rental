@@ -1,5 +1,0 @@
-{
-    "require": {
-        "vocolboy/php-emv-qrcode": "^2.0"
-    }
-}

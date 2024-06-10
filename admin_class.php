@@ -27,15 +27,15 @@ class Action
         if ($qry->num_rows > 0) {
             $user = $qry->fetch_array();
             $_SESSION['login_name'] = $user['username'];
-            $_SESSION['login_id'] = $user['id']; // Set the user ID in the session
+            $_SESSION['login_id'] = $user['id']; 
             foreach ($user as $key => $value) {
                 if (!is_numeric($key)) {
                     $_SESSION['login_' . $key] = $value;
                 }
             }
-            return 1; // Return 1 for successful login
+            return 1; 
         } else {
-            return 3; // Return 3 for login failed
+            return 3; 
         }
     }
 
@@ -237,9 +237,9 @@ class Action
     function save_category()
     {
         extract($_POST);
-        $user_id = $_SESSION['login_id']; // Get the current user's ID
+        $user_id = $_SESSION['login_id'];
         $data = "name = '$name' ";
-        $data .= ", user_id = '$user_id' "; // Add the user_id
+        $data .= ", user_id = '$user_id' ";
         if (empty($id)) {
             $save = $this->db->query("INSERT INTO categories set $data");
         } else {
@@ -252,8 +252,8 @@ class Action
     function delete_category()
     {
         extract($_POST);
-        $user_id = $_SESSION['login_id']; // Get the current user's ID
-        $delete = $this->db->query("DELETE FROM categories where id = " . $id . " AND user_id = '$user_id'"); // Add the user_id condition
+        $user_id = $_SESSION['login_id']; 
+        $delete = $this->db->query("DELETE FROM categories where id = " . $id . " AND user_id = '$user_id'"); 
         if ($delete) {
             return 1;
         }
@@ -262,7 +262,7 @@ class Action
     function save_house()
     {
         extract($_POST);
-        $user_id = $_SESSION['login_id']; // Get the current user's ID
+        $user_id = $_SESSION['login_id']; 
         $data = " house_no = '$house_no' ";
         $data .= ", description = '$description' ";
         $data .= ", category_id = '$category_id' ";
@@ -270,7 +270,7 @@ class Action
         $data .= ", capacity = '$capacity' ";
         $data .= ", occupancy_status = '$occupancy_status' ";
         $data .= ", address = '$address' ";
-        $data .= ", user_id = '$user_id' "; // Add the user_id
+        $data .= ", user_id = '$user_id' "; 
         if (empty($id)) {
             $chk = $this->db->query("SELECT * FROM houses WHERE house_no = '$house_no' AND user_id = '$user_id'")->num_rows;
             if ($chk > 0) {
@@ -294,8 +294,8 @@ class Action
     function delete_house()
     {
         extract($_POST);
-        $user_id = $_SESSION['login_id']; // Get the current user's ID
-        $delete = $this->db->query("DELETE FROM houses where id = " . $id . " AND user_id = '$user_id'"); // Add the user_id condition
+        $user_id = $_SESSION['login_id'];
+        $delete = $this->db->query("DELETE FROM houses where id = " . $id . " AND user_id = '$user_id'");
         if ($delete) {
             return 1;
         }
@@ -404,7 +404,7 @@ class Action
                 $data .= "$k=?, ";
             }
         }
-        $data = rtrim($data, ", "); // Remove the last comma and space
+        $data = rtrim($data, ", "); 
         $user_id = $_SESSION['login_id'];
         $params = array_values(array_filter($_POST, function($k) {
             return !in_array($k, array('id', 'ref_code')) && !is_numeric($k);
@@ -429,6 +429,7 @@ class Action
         }
         return 0;
     }
+    
     
 
     function delete_payment() {

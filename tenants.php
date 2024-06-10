@@ -52,13 +52,19 @@ $user_id = $_SESSION['login_id'];
                         WHERE t.status = 1 AND t.user_id = '$user_id' AND h.id IS NOT NULL
                         ORDER BY h.house_no DESC");
                     while($row=$tenant->fetch_assoc()):
-                        $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['contract_start']." 23:59:59"));
-                        $months = floor(($months) / (30*60*60*24));
+                        $start_date = new DateTime($row['contract_start']);
+                        $current_date = new DateTime();
+                        $interval = $start_date->diff($current_date);
+                        $months = $interval->y * 12 + $interval->m;
+                        
                         $payable = $row['price'] * $months;
-                        $paid = $conn->query("SELECT SUM(amount) as paid FROM payments where tenant_id =".$row['id']);
-                        $last_payment = $conn->query("SELECT * FROM payments where tenant_id =".$row['id']." order by unix_timestamp(date_created) desc limit 1");
+                        
+                        $paid = $conn->query("SELECT SUM(amount) as paid FROM payments WHERE tenant_id = ".$row['id']);
                         $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : 0;
+
+                        $last_payment = $conn->query("SELECT * FROM payments WHERE tenant_id = ".$row['id']." ORDER BY UNIX_TIMESTAMP(date_created) DESC LIMIT 1");
                         $last_payment = $last_payment->num_rows > 0 ? date("M d, Y",strtotime($last_payment->fetch_array()['date_created'])) : 'N/A';
+                        
                         $outstanding = $payable - $paid;
                     ?>
                     <tr>
@@ -127,13 +133,19 @@ $user_id = $_SESSION['login_id'];
                         WHERE t.user_id = '$user_id'
                         ORDER BY h.house_no DESC ");
                     while($row = $tenant->fetch_assoc()):
-                        $months = abs(strtotime(date('Y-m-d')." 23:59:59") - strtotime($row['contract_start']." 23:59:59"));
-                        $months = floor(($months) / (30*60*60*24));
+                        $start_date = new DateTime($row['contract_start']);
+                        $current_date = new DateTime();
+                        $interval = $start_date->diff($current_date);
+                        $months = $interval->y * 12 + $interval->m;
+                        
                         $payable = $row['price'] * $months;
-                        $paid = $conn->query("SELECT SUM(amount) as paid FROM payments where tenant_id =".$row['id']);
-                        $last_payment = $conn->query("SELECT * FROM payments where tenant_id =".$row['id']." order by unix_timestamp(date_created) desc limit 1");
+                        
+                        $paid = $conn->query("SELECT SUM(amount) as paid FROM payments WHERE tenant_id = ".$row['id']);
                         $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : 0;
+
+                        $last_payment = $conn->query("SELECT * FROM payments WHERE tenant_id = ".$row['id']." ORDER BY UNIX_TIMESTAMP(date_created) DESC LIMIT 1");
                         $last_payment = $last_payment->num_rows > 0 ? date("M d, Y",strtotime($last_payment->fetch_array()['date_created'])) : 'N/A';
+                        
                         $outstanding = $payable - $paid;
                     ?>
                     <tr>
@@ -170,7 +182,6 @@ $user_id = $_SESSION['login_id'];
     </div>
 </div>
 <!-- Table Panel -->
-
 
 	</div>
 </div>

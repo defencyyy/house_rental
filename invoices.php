@@ -1,8 +1,5 @@
 <?php
-require 'vendor/autoload.php';
 include('db_connect.php');
-
-use Vocolboy\PromptpayGenerator\GCashLib;
 ?>
 
 <h2 class="titlepage"> Payments </h2>
@@ -104,7 +101,7 @@ use Vocolboy\PromptpayGenerator\GCashLib;
         _conf("Are you sure to delete this invoice?", "delete_invoice", [$(this).attr('data-id')])
     })
     $('.generate_qr').click(function() {
-        show_qr_modal();
+    alert("QR Feature is currently under development. Please check back later.");
     })
     function delete_invoice(id) {
         start_load()

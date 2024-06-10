@@ -82,6 +82,10 @@ if (isset($_GET['id'])) {
                 <label for="" class="control-label">Contract End</label>
                 <input type="date" class="form-control" name="contract_end" value="<?php echo isset($contract_end) ? $contract_end : '' ?>" required>
             </div>
+            <div class="col-md-4">
+                <label for="" class="control-label">Date In</label>
+                <input type="date" class="form-control" name="date_in" value="<?php echo isset($date_in) ? $date_in : date('Y-m-d'); ?>" required>
+            </div>
         </div>
     </form>
 </div>
