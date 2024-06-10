@@ -3,11 +3,10 @@ include 'db_connect.php';
 session_start(); 
 $user_id = $_SESSION['login_id'];
 if(isset($_GET['id'])){
-    $qry = $conn->query("SELECT * FROM payments where id = ".$_GET['id']." and user_id = '".$_SESSION['login_id']."'");
+    $qry = $conn->query("SELECT * FROM payments where id= ".$_GET['id']);
     foreach($qry->fetch_array() as $k => $val){
         $$k=$val;
     }
-    $tenant_id = $tenant_id ?? ''; 
 }
 ?>
 
@@ -15,37 +14,33 @@ if(isset($_GET['id'])){
     <form action="" id="manage-payment">
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
         <div id="msg"></div>
-        <div class="form-group">
-            <label for="" class="control-label">Tenant</label>
-            <select name="tenant_id" id="tenant_id" class="custom-select select2">
-                <option value=""></option>
+            <div class="form-group">
+                <label for="" class="control-label">Tenant</label>
+                <select name="tenant_id" id="tenant_id" class="custom-select select2">
+                    <option value=""></option>
 
                 <?php 
-                $user_id = $_SESSION['login_id'];
                 $tenant = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM tenants 
-                                        WHERE status = 1 AND user_id = '$user_id' 
-                                        order by name asc");
+                WHERE status = 1 AND user_id = '$user_id' 
+                order by name asc");
                 while($row=$tenant->fetch_assoc()):
                 ?>
-
                 <option value="<?php echo $row['id'] ?>" <?php echo isset($tenant_id) && $tenant_id == $row['id'] ? 'selected' : '' ?>><?php echo ucwords($row['name']) ?></option>
                 <?php endwhile; ?>
-            </select>
-        </div>
-        <div class="form-group" id="details">
+                </select>
+            </div>
+            <div class="form-group" id="details">
             
-        </div>
-        <div class="form-group">
-            <label for="" class="control-label">Invoice: </label>
-            <input type="text" class="form-control" name="invoice"  value="<?php echo isset($invoice) ? $invoice :'' ?>" >
-        </div>
-        <div class="form-group">
-            <label for="" class="control-label">Amount Paid: </label>
-            <input type="number" class="form-control text-right" step="any" name="amount"  value="<?php echo isset($amount) ? $amount :'' ?>" >
-        </div>
-        <div class="form-group">
-            <label for="" class="control-label">Payment Date: </label>
-            <input type="date" class="form-control" name="payment_date" value="<?php echo isset($payment_date) ? date("Y-m-d", strtotime($payment_date)) : date("Y-m-d") ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label">Invoice: </label>
+                <input type="text" class="form-control" name="invoice"  value="<?php echo isset($invoice) ? $invoice :'' ?>" >
+            </div>
+            <div class="form-group">
+                <label for="" class="control-label">Amount Paid: </label>
+                <input type="number" class="form-control text-right" step="any" name="amount"  value="<?php echo isset($amount) ? $amount :'' ?>" >
+            </div>
+            
         </div>
     </form>
 </div>
@@ -61,7 +56,6 @@ if(isset($_GET['id'])){
         <hr>
     </div>
 </div>
-
 <script>
     $(document).ready(function() {
         if ('<?php echo isset($id) ? 1 : 0 ?>' == 1)
