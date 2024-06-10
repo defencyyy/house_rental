@@ -47,9 +47,12 @@ if (isset($_GET['id'])) {
                     <option value=""></option>
                     <?php 
                     $query = "SELECT * FROM houses 
-                            WHERE id NOT IN (SELECT house_id FROM tenants WHERE status = 1 AND user_id = '$user_id') 
-                            AND user_id = '$user_id' 
-                            " . (isset($house_id) ? " OR id = $house_id" : "");
+                                WHERE id NOT IN (SELECT house_id FROM tenants 
+                                WHERE status = 1 AND user_id = '$user_id') 
+                                AND user_id = '$user_id' 
+                                AND occupancy_status != 'Maintenance' " 
+                    . (isset($house_id) ? " OR id = $house_id" : "");
+          
 
                     $house = $conn->query($query);
 

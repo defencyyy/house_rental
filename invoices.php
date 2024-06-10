@@ -104,8 +104,7 @@ use Vocolboy\PromptpayGenerator\GCashLib;
         _conf("Are you sure to delete this invoice?", "delete_invoice", [$(this).attr('data-id')])
     })
     $('.generate_qr').click(function() {
-        var qrCode = $(this).attr('data-qr');
-        alert("QR Code: " + qrCode);
+        show_qr_modal();
     })
     function delete_invoice(id) {
         start_load()
@@ -123,4 +122,9 @@ use Vocolboy\PromptpayGenerator\GCashLib;
             }
         })
     }
+
+    function show_qr_modal() {
+        uni_modal("QR Feature In-Development", "qr_feature_modal.php", "mid-large");
+    }
+
 </script>
