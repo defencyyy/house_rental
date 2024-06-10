@@ -211,8 +211,8 @@
       <h4 id = "contact-des"> Let us know what you think through the channels below: </h4>
       <img src = "assets\pictures\fb.png" id = "icon1">
       <img src = "assets\pictures\google.png" id = "icon2">
-      <p id = "fb"> LivWell </p>
-      <p id = "google"> livwell@gmail.com </p>
+      <p id = "fb"> AMS </p>
+      <p id = "google"> AMS@gmail.com </p>
     </div>
   </section>
 

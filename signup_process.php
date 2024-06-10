@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Validate email format using regular expression
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $email)) {
         // Invalid email format
         echo "<script>alert('Invalid email format. Please enter a valid email address.');</script>";
@@ -41,27 +40,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<script>alert('Password must contain at least one special character.');</script>";
             echo "<script>window.location.href = 'signup.php';</script>";
         } else {
-            // No existing email or username, and password meets strength requirements, proceed with registration
-
-            // Retrieve other form data
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
 
-            // Hash the password for better security
-            $hashed_password = md5($password); // Note: Consider using stronger hashing algorithms like bcrypt
+            $hashed_password = md5($password);
 
-            // Prepare and bind parameters for the SQL statement to prevent SQL injection
             $stmt = $conn->prepare("INSERT INTO users (email, firstname, lastname, username, password) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param("sssss", $email, $firstname, $lastname, $username, $hashed_password);
 
-            // Execute the prepared statement
             if ($stmt->execute()) {
-                // Registration successful
                 echo "<script>alert('Registration successful. You can now login.');</script>";
                 echo "<script>window.location.href = 'login.php';</script>";
-                exit; // Terminate further execution
+                exit; 
             } else {
-                // Handle database error
                 echo "<script>alert('Error: " . $conn->error . "');</script>";
             }
 

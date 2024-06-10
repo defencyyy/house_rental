@@ -1,6 +1,6 @@
 <?php include('db_connect.php');?>
 
-<h2 class = "titlepage">Houses</h2>
+<h2 class="titlepage">Houses</h2>
 
 <div class="container-fluid tablepos">
 	
@@ -28,7 +28,8 @@
 								<label class="control-label">House Category</label>
 								<select name="category_id" id="" class="custom-select" required>
 									<?php 
-									$categories = $conn->query("SELECT * FROM categories order by id asc");
+									$user_id = $_SESSION['login_id'];
+									$categories = $conn->query("SELECT * FROM categories WHERE user_id = '$user_id' ORDER BY id ASC");
 									if($categories->num_rows > 0):
 									while($row= $categories->fetch_assoc()) :
 									?>
@@ -69,7 +70,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<button class="col-sm-3 offset-md-3 savebtn"> Save</button>
-									<button class="btn btn-sm btn-default col-sm-3" type="reset" > Cancel</button>
+									<button class="btn btn-sm btn-default col-sm-3" type="reset"> Cancel</button>
 								</div>
 							</div>
 						</div>
@@ -95,9 +96,13 @@
 							</thead>
 							<tbody>
 								<?php 
+								$user_id = $_SESSION['login_id'];
 								$i = 1;
-								$house = $conn->query("SELECT h.*,c.name as cname FROM houses h inner join categories c on c.id = h.category_id order by id asc");
-								while($row=$house->fetch_assoc()):
+								$house = $conn->query("SELECT h.*, c.name as cname FROM houses h 
+                                      INNER JOIN categories c ON c.id = h.category_id 
+                                      WHERE h.user_id = '$user_id' 
+                                      ORDER BY id ASC");
+								while($row = $house->fetch_assoc()):
 								?>
 								<tr>
 									<td class="text-center"><?php echo $i++ ?></td>
@@ -105,13 +110,14 @@
 										<p>House #: <b><?php echo $row['house_no'] ?></b></p>
 										<p><small>House Type: <b><?php echo $row['cname'] ?></b></small></p>
 										<p><small>Occupancy Status: <b><?php echo ucfirst($row['occupancy_status']) ?></b></small></p>
-										<p><small>Price: <b><?php echo number_format($row['price'],2) ?></b></small></p>
+										<p><small>Price: <b><?php echo number_format($row['price'], 2) ?></b></small></p>
 										<p><small>Capacity: <b><?php echo $row['capacity'] ?></b></small></p>
 										<p><small>Address: <b><?php echo $row['address'] ?></b></small></p>
 										<p><small>Description: <b><?php echo $row['description'] ?></b></small></p>
 									</td>
 									<td class="text-center">
-										<button class="btn btn-sm btn-primary edit_house" type="button" data-id="<?php echo $row['id'] ?>"  data-house_no="<?php echo $row['house_no'] ?>" data-description="<?php echo $row['description'] ?>" data-category_id="<?php echo $row['category_id'] ?>" data-price="<?php echo $row['price'] ?>" data-capacity="<?php echo $row['capacity'] ?>" data-occupancy_status="<?php echo $row['occupancy_status'] ?>" data-address="<?php echo $row['address'] ?>">Edit</button>
+										<button class="btn btn-sm btn-primary edit_house" type="button" data-id="<?php echo $row['id'] ?>"  data-house_no="<?php echo $row['house_no'] ?>" data-description="<?php echo $row['description'] ?>" data-category_id="<?php echo $row['category_id'] ?>" data-price="<?php
+										echo $row['price'] ?>" data-capacity="<?php echo $row['capacity'] ?>" data-occupancy_status="<?php echo $row['occupancy_status'] ?>" data-address="<?php echo $row['address'] ?>">Edit</button>
 										<button class="btn btn-sm btn-danger delete_house" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
 									</td>
 								</tr>
@@ -138,17 +144,20 @@
 </style>
 
 <script>
-	$('#manage-house').on('reset',function(e){
-		$('#msg').html('')
-	})
+	$('#manage-house').on('reset', function(e){
+		$('#msg').html('');
+	});
 
 	$('#manage-house').submit(function(e){
-		e.preventDefault()
-		start_load()
-		$('#msg').html('')
+		e.preventDefault();
+		start_load();
+		$('#msg').html('');
+		var form = $(this)[0];
+		var formData = new FormData(form);
+		formData.append('user_id', <?php echo $_SESSION['login_id']; ?>);
 		$.ajax({
 			url:'ajax.php?action=save_house',
-			data: new FormData($(this)[0]),
+			data: formData,
 		    cache: false,
 		    contentType: false,
 		    processData: false,
@@ -156,56 +165,54 @@
 		    type: 'POST',
 			success:function(resp){
 				if(resp==1){
-					alert_toast("Data successfully saved",'success')
+					alert_toast("Data successfully saved",'success');
 					setTimeout(function(){
-						location.reload()
-					},1500)
-				}
-				else if(resp==2){
-					$('#msg').html('<div class="alert alert-danger">House number already exist.</div>')
-					end_load()
+						location.reload();
+					},1500);
+				} else if(resp==2){
+					$('#msg').html('<div class="alert alert-danger">House number already exists.</div>');
+					end_load();
 				}
 			}
-		})
-	})
+		});
+	});
 
 	$('.edit_house').click(function(){
-    start_load();
-    var cat = $('#manage-house');
-    cat.get(0).reset();
-    cat.find("[name='id']").val($(this).attr('data-id'));
-    cat.find("[name='house_no']").val($(this).attr('data-house_no'));
-    cat.find("[name='description']").val($(this).attr('data-description'));
-    cat.find("[name='price']").val($(this).attr('data-price'));
-    cat.find("[name='category_id']").val($(this).attr('data-category_id'));
-    cat.find("[name='occupancy_status']").val($(this).attr('data-occupancy_status'));
-    cat.find("[name='address']").val($(this).attr('data-address'));
-    var capacityValue = $(this).attr('data-capacity');
-    cat.find("[name='capacity'] option[value='" + capacityValue + "']").prop('selected', true);
-    end_load();
-});
-
+		start_load();
+		var cat = $('#manage-house');
+		cat.get(0).reset();
+		cat.find("[name='id']").val($(this).attr('data-id'));
+		cat.find("[name='house_no']").val($(this).attr('data-house_no'));
+		cat.find("[name='description']").val($(this).attr('data-description'));
+		cat.find("[name='price']").val($(this).attr('data-price'));
+		cat.find("[name='category_id']").val($(this).attr('data-category_id'));
+		cat.find("[name='occupancy_status']").val($(this).attr('data-occupancy_status'));
+		cat.find("[name='address']").val($(this).attr('data-address'));
+		var capacityValue = $(this).attr('data-capacity');
+		cat.find("[name='capacity'] option[value='" + capacityValue + "']").prop('selected', true);
+		end_load();
+	});
 
 	$('.delete_house').click(function(){
-		_conf("Are you sure to delete this house?","delete_house",[$(this).attr('data-id')])
-	})
+		_conf("Are you sure to delete this house?","delete_house",[$(this).attr('data-id')]);
+	});
 
 	function delete_house($id){
-		start_load()
+		start_load();
 		$.ajax({
 			url:'ajax.php?action=delete_house',
 			method:'POST',
 			data:{id:$id},
 			success:function(resp){
 				if(resp==1){
-					alert_toast("Data successfully deleted",'success')
+					alert_toast("Data successfully deleted",'success');
 					setTimeout(function(){
-						location.reload()
-					},1500)
+						location.reload();
+					},1500);
 				}
 			}
-		})
+		});
 	}
 
-	$('table').dataTable()
+	$('table').dataTable();
 </script>
