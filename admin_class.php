@@ -401,25 +401,35 @@ class Action
         $data = "";
         foreach ($_POST as $k => $v) {
             if (!in_array($k, array('id', 'ref_code')) && !is_numeric($k)) {
-                            if (empty($data)) {
-                                    $data .= " $k='$v' ";
-                            } else {
-                                    $data .= ", $k='$v' ";
-                            }
-                    }
+                $data .= "$k=?, ";
             }
-            $user_id = $_SESSION['login_id']; 
-            if (empty($id)) {
-                    $save = $this->db->query("INSERT INTO payments set $data, user_id = '$user_id' ");
-                    $id = $this->db->insert_id;
-            } else {
-                    $save = $this->db->query("UPDATE payments set $data where id = $id AND user_id = '$user_id'"); 
+        }
+        $data = rtrim($data, ", "); // Remove the last comma and space
+        $user_id = $_SESSION['login_id'];
+        $params = array_values(array_filter($_POST, function($k) {
+            return !in_array($k, array('id', 'ref_code')) && !is_numeric($k);
+        }, ARRAY_FILTER_USE_KEY));
+        $params[] = $user_id;
+    
+        $stmt = null;
+        if (empty($id)) {
+            $query = "INSERT INTO payments SET $data, user_id=?";
+            $stmt = $this->db->prepare($query);
+        } else {
+            $query = "UPDATE payments SET $data WHERE id=? AND user_id=?";
+            $params[] = $id;
+            $stmt = $this->db->prepare($query);
+        }
+    
+        if ($stmt) {
+            $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+            if ($stmt->execute()) {
+                return 1;
             }
-
-            if ($save) {
-                    return 1;
-            }
+        }
+        return 0;
     }
+    
 
     function delete_payment() {
         extract($_POST);

@@ -63,62 +63,66 @@ if(isset($_GET['id'])){
 </div>
 
 <script>
-    $(document).ready(function(){
-        if('<?php echo isset($id)? 1:0 ?>' == 1)
-            $('#tenant_id').trigger('change') 
-    })
+    $(document).ready(function() {
+        if ('<?php echo isset($id) ? 1 : 0 ?>' == 1)
+            $('#tenant_id').trigger('change');
+    });
 
-   $('.select2').select2({
-    placeholder:"Please Select Here",
-    width:"100%"
-   })
-   $('#tenant_id').change(function(){
-    if($(this).val() <= 0)
-        return false;
+    $('.select2').select2({
+        placeholder: "Please Select Here",
+        width: "100%"
+    });
 
-    start_load()
-    $.ajax({
-        url:'ajax.php?action=get_tdetails',
-        method:'POST',
-        data:{id:$(this).val(),pid:'<?php echo isset($id) ? $id : '' ?>'},
-        success:function(resp){
-            if(resp){
-                resp = JSON.parse(resp)
-                var details = $('#details_clone .d').clone()
-                details.find('.tname').text(resp.name)
-                details.find('.price').text(resp.price)
-                details.find('.outstanding').text(resp.outstanding)
-                details.find('.total_paid').text(resp.paid)
-                details.find('.payable_months').text(resp.months)
-                console.log(details.html())
-                $('#details').html(details)
-            }
-        },
-        complete:function(){
-            end_load()
-        }
-    })
-   })
-    $('#manage-payment').submit(function(e){
-        e.preventDefault()
-        start_load()
-        $('#msg').html('')
+    $('#tenant_id').change(function() {
+        if ($(this).val() <= 0)
+            return false;
+
+        start_load();
         $.ajax({
-            url:'ajax.php?action=save_payment',
+            url: 'ajax.php?action=get_tdetails',
+            method: 'POST',
+            data: { id: $(this).val(), pid: '<?php echo isset($id) ? $id : '' ?>' },
+            success: function(resp) {
+                if (resp) {
+                    resp = JSON.parse(resp);
+                    var details = $('#details_clone .d').clone();
+                    details.find('.tname').text(resp.name);
+                    details.find('.price').text(resp.price);
+                    details.find('.outstanding').text(resp.outstanding);
+                    details.find('.total_paid').text(resp.paid);
+                    details.find('.payable_months').text(resp.months);
+                    $('#details').html(details);
+                }
+            },
+            complete: function() {
+                end_load();
+            }
+        });
+    });
+
+    $('#manage-payment').submit(function(e) {
+        e.preventDefault();
+        start_load();
+        $('#msg').html('');
+        $.ajax({
+            url: 'ajax.php?action=save_payment',
             data: new FormData($(this)[0]),
             cache: false,
             contentType: false,
             processData: false,
             method: 'POST',
             type: 'POST',
-            success:function(resp){
-                if(resp==1){
-                    alert_toast("Data successfully saved.",'success')
-                        setTimeout(function(){
-                            location.reload()
-                        },1000)
+            success: function(resp) {
+                if (resp == 1) {
+                    alert_toast("Data successfully saved.", 'success');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    $('#msg').html('<div class="alert alert-danger">An error occurred while saving data.</div>');
                 }
             }
-        })
-    })
+        });
+    });
+
 </script>
