@@ -3,7 +3,6 @@ require 'vendor/autoload.php';
 include('db_connect.php');
 
 use Vocolboy\PromptpayGenerator\GCashLib;
-
 ?>
 
 <h2 class="titlepage"> Payments </h2>
@@ -48,7 +47,7 @@ use Vocolboy\PromptpayGenerator\GCashLib;
                                                           WHERE p.user_id = '$user_id' 
                                                           ORDER BY DATE(p.date_created) DESC ");
                                 while ($row = $invoices->fetch_assoc()):
-                                    $qrCode = GCashLib::generate($row['gcash_id'], $row['name'], $row['amount']); // Corrected to GCashLib
+                                    //$qrCode = GCashLib::generate($row['gcash_id'], $row['name'], $row['amount']);
                                 ?>
                                 <tr>
                                     <td class="text-center"><?php echo $i++ ?></td>

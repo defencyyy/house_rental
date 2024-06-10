@@ -59,8 +59,8 @@ switch($action) {
     case 'delete_payment':
         echo $crud->delete_payment();
         break;
-    case 'delete_invoice': // Add this case for deleting invoice
-        echo $crud->delete_invoice(); // Calls the delete_invoice method
+    case 'delete_invoice':
+        echo $crud->delete_invoice();
         break;
     default:
         echo "Invalid action";

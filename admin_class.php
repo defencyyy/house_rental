@@ -301,39 +301,36 @@ class Action
         }
     }
 
-    function save_tenant()
-{
-    extract($_POST);
-    $user_id = $_SESSION['login_id']; // Get the current user's ID
-    $status = isset($house_id) && !empty($house_id) ? 1 : 0; // Check if house is selected
-    $data = " firstname = '$firstname' ";
-    $data .= ", lastname = '$lastname' ";
-    $data .= ", middlename = '$middlename' ";
-    $data .= ", email = '$email' ";
-    $data .= ", contact = '$contact' ";
-    $data .= ", house_id = '$house_id' ";
-    $data .= ", date_in = '$date_in' ";
-    $data .= ", contract_start = '$contract_start' ";
-    $data .= ", contract_end = '$contract_end' ";
-    $data .= ", user_id = '$user_id' "; // Add the user_id
-    $data .= ", status = '$status' "; // Add the status
+    function save_tenant() {
+        extract($_POST);
+        $user_id = $_SESSION['login_id']; 
+        $status = isset($house_id) && !empty($house_id) ? 1 : 0; 
+        $data = " firstname = '$firstname' ";
+        $data .= ", lastname = '$lastname' ";
+        $data .= ", middlename = '$middlename' ";
+        $data .= ", email = '$email' ";
+        $data .= ", contact = '$contact' ";
+        $data .= ", house_id = '$house_id' ";
+        $data .= ", date_in = '$date_in' ";
+        $data .= ", contract_start = '$contract_start' ";
+        $data .= ", contract_end = '$contract_end' ";
+        $data .= ", user_id = '$user_id' "; 
+        $data .= ", status = '$status' "; 
 
-    if (empty($id)) {
-        $save = $this->db->query("INSERT INTO tenants set $data");
-    } else {
-        $save = $this->db->query("UPDATE tenants set $data where id = $id AND user_id = '$user_id'");
+        if (empty($id)) {
+            $save = $this->db->query("INSERT INTO tenants set $data");
+        } else {
+            $save = $this->db->query("UPDATE tenants set $data where id = $id AND user_id = '$user_id'");
+        }
+
+        if ($save) {
+            return 1;
+        }
+        return 0;
     }
 
-    if ($save) {
-        return 1;
-    }
-    return 0;
-}
-
-
-    function get_houses()
-    {
-        $user_id = $_SESSION['login_id']; // Get the current user's ID
+    function get_houses() {
+        $user_id = $_SESSION['login_id']; 
         $qry = $this->db->query("SELECT * FROM houses WHERE user_id = '$user_id'");
         $data = array();
         while ($row = $qry->fetch_assoc()) {
@@ -341,8 +338,6 @@ class Action
         }
         return $data;
     }
-
-
 
     function delete_tenant()
     {
@@ -357,89 +352,83 @@ class Action
         return 0;
     }
 
-    function get_tdetails()
-{
-    extract($_POST);
-    $data = array();
-    $user_id = $_SESSION['login_id'];
-    
-    // Ensure to use $this->db instead of $conn
-    $qry = $this->db->query("SELECT t.*, CONCAT(t.lastname, ', ', t.firstname, ' ', t.middlename) AS name, h.house_no, h.price 
-                             FROM tenants t 
-                             INNER JOIN houses h ON h.id = t.house_id 
-                             WHERE t.id = $id AND t.user_id = $user_id");
-    
-    if ($qry->num_rows > 0) {
-        $tenant = $qry->fetch_assoc();
-        foreach ($tenant as $k => $v) {
-            if (!is_numeric($k)) {
-                $$k = $v;
-                $data[$k] = $v;
+    function get_tdetails() {
+        extract($_POST);
+        $data = array();
+        $user_id = $_SESSION['login_id'];
+        
+        $qry = $this->db->query("SELECT t.*, CONCAT(t.lastname, ', ', t.firstname, ' ', t.middlename) AS name, h.house_no, h.price 
+                                FROM tenants t 
+                                INNER JOIN houses h ON h.id = t.house_id 
+                                WHERE t.id = $id AND t.user_id = $user_id");
+        
+        if ($qry->num_rows > 0) {
+            $tenant = $qry->fetch_assoc();
+            foreach ($tenant as $k => $v) {
+                if (!is_numeric($k)) {
+                    $$k = $v;
+                    $data[$k] = $v;
+                }
             }
+            
+            $months = abs(strtotime(date('Y-m-d') . " 23:59:59") - strtotime($date_in . " 23:59:59"));
+            $months = floor(($months) / (30 * 60 * 60 * 24));
+            $data['months'] = $months;
+            
+            $payable = abs($price * $months);
+            $data['payable'] = number_format($payable, 2);
+            
+            $paid = $this->db->query("SELECT SUM(amount) as paid FROM payments WHERE tenant_id = $id");
+            $last_payment = $this->db->query("SELECT * FROM payments WHERE tenant_id = $id ORDER BY unix_timestamp(date_created) DESC LIMIT 1");
+            
+            $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : 0;
+            $data['paid'] = number_format($paid, 2);
+            
+            $data['last_payment'] = $last_payment->num_rows > 0 ? date("M d, Y", strtotime($last_payment->fetch_array()['date_created'])) : 'N/A';
+            $data['outstanding'] = number_format($payable - $paid, 2);
+            $data['price'] = number_format($price, 2);
+            $data['name'] = ucwords($name);
+            $data['rent_started'] = date('M d, Y', strtotime($date_in));
+            
+            return json_encode($data);
+        } else {
+            return json_encode(['error' => 'No tenant found with the given ID']);
         }
-        
-        $months = abs(strtotime(date('Y-m-d') . " 23:59:59") - strtotime($date_in . " 23:59:59"));
-        $months = floor(($months) / (30 * 60 * 60 * 24));
-        $data['months'] = $months;
-        
-        $payable = abs($price * $months);
-        $data['payable'] = number_format($payable, 2);
-        
-        $paid = $this->db->query("SELECT SUM(amount) as paid FROM payments WHERE tenant_id = $id");
-        $last_payment = $this->db->query("SELECT * FROM payments WHERE tenant_id = $id ORDER BY unix_timestamp(date_created) DESC LIMIT 1");
-        
-        $paid = $paid->num_rows > 0 ? $paid->fetch_array()['paid'] : 0;
-        $data['paid'] = number_format($paid, 2);
-        
-        $data['last_payment'] = $last_payment->num_rows > 0 ? date("M d, Y", strtotime($last_payment->fetch_array()['date_created'])) : 'N/A';
-        $data['outstanding'] = number_format($payable - $paid, 2);
-        $data['price'] = number_format($price, 2);
-        $data['name'] = ucwords($name);
-        $data['rent_started'] = date('M d, Y', strtotime($date_in));
-        
-        return json_encode($data);
-    } else {
-        return json_encode(['error' => 'No tenant found with the given ID']);
     }
-}
 
-
-    function save_payment()
-    {
+    function save_payment() {
         extract($_POST);
         $data = "";
         foreach ($_POST as $k => $v) {
             if (!in_array($k, array('id', 'ref_code')) && !is_numeric($k)) {
-							if (empty($data)) {
-									$data .= " $k='$v' ";
-							} else {
-									$data .= ", $k='$v' ";
-							}
-					}
-			}
-			$user_id = $_SESSION['login_id']; // Get the current user's ID
-			if (empty($id)) {
-					$save = $this->db->query("INSERT INTO payments set $data, user_id = '$user_id' "); // Add the user_id
-					$id = $this->db->insert_id;
-			} else {
-					$save = $this->db->query("UPDATE payments set $data where id = $id AND user_id = '$user_id'"); // Add the user_id condition
-			}
+                            if (empty($data)) {
+                                    $data .= " $k='$v' ";
+                            } else {
+                                    $data .= ", $k='$v' ";
+                            }
+                    }
+            }
+            $user_id = $_SESSION['login_id']; 
+            if (empty($id)) {
+                    $save = $this->db->query("INSERT INTO payments set $data, user_id = '$user_id' ");
+                    $id = $this->db->insert_id;
+            } else {
+                    $save = $this->db->query("UPDATE payments set $data where id = $id AND user_id = '$user_id'"); 
+            }
 
-			if ($save) {
-					return 1;
-			}
-	}
-	function delete_payment()
-	{
-			extract($_POST);
-			$user_id = $_SESSION['login_id']; // Get the current user's ID
-			$delete = $this->db->query("DELETE FROM payments where id = " . $id . " AND user_id = '$user_id'"); // Add the user_id condition
-			if ($delete) {
-					return 1;
-			}
-	}
+            if ($save) {
+                    return 1;
+            }
+    }
+
+    function delete_payment() {
+        extract($_POST);
+        $user_id = $_SESSION['login_id']; 
+        $delete = $this->db->query("DELETE FROM payments where id = " . $id . " AND user_id = '$user_id'");
+        if ($delete) {
+                return 1;
+        }
+    }
 }
 
 ?>
-
-
