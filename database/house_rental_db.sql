@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 07:47 AM
+-- Generation Time: Jun 10, 2024 at 04:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,10 +38,6 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `user_id`, `name`) VALUES
-(1, NULL, 'Studio-Type Home'),
-(2, NULL, 'Bungalow Home'),
-(3, NULL, 'Two-Story Home'),
-(4, NULL, 'Other Type'),
 (8, 2, 'Condominum'),
 (9, 2, 'Bungalow'),
 (11, 2, 'Two-Story');
@@ -70,7 +66,7 @@ CREATE TABLE `houses` (
 
 INSERT INTO `houses` (`id`, `house_no`, `category_id`, `description`, `price`, `occupancy_status`, `capacity`, `address`, `user_id`) VALUES
 (10, '1A', 1, '', 5000, 'Vacant', '1-3', '', 9),
-(13, '1A', 8, '', 12000, 'Vacant', '1-3', 'Makati', 2),
+(13, '1A', 8, '', 12000, 'Occupied', '1-3', 'Makati', 2),
 (14, '1B', 8, '', 11000, 'Vacant', '1-3', 'Makati', 2);
 
 -- --------------------------------------------------------
@@ -93,9 +89,9 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `user_id`, `tenant_id`, `amount`, `invoice`, `date_created`) VALUES
-(1, NULL, 2, 2500, '', '2020-10-26 11:29:35'),
-(2, NULL, 2, 7500, '', '2020-10-26 11:30:21'),
-(4, NULL, 2, 5000, '', '2024-03-20 00:00:00');
+(8, 2, 33, 123, '', '2024-06-10 21:11:36'),
+(9, 2, 33, 123, '', '2024-06-10 21:12:40'),
+(10, 2, 33, 246, '', '2024-06-10 21:19:29');
 
 -- --------------------------------------------------------
 
@@ -145,8 +141,8 @@ CREATE TABLE `tenants` (
 --
 
 INSERT INTO `tenants` (`id`, `firstname`, `middlename`, `lastname`, `email`, `contact`, `house_id`, `status`, `date_in`, `contract_start`, `contract_end`, `user_id`) VALUES
-(30, '', '', 'Cy', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00', 2),
-(31, '', '', 'Woah', '', '', 0, 1, '0000-00-00', '0000-00-00', '0000-00-00', 2);
+(32, 'test', '', 'test', '', '', 0, 0, '2024-06-10', '0000-00-00', '0000-00-00', 2),
+(33, 'new', '', 'test new', '', '', 13, 1, '2024-06-10', '0000-00-00', '0000-00-00', 2);
 
 -- --------------------------------------------------------
 
@@ -231,7 +227,7 @@ ALTER TABLE `houses`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `system_settings`
@@ -243,7 +239,7 @@ ALTER TABLE `system_settings`
 -- AUTO_INCREMENT for table `tenants`
 --
 ALTER TABLE `tenants`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `users`
